@@ -198,7 +198,7 @@ footer{border-top:1px solid var(--line);padding-inline:1rem;padding-block:1.25re
 <main class="wrap" id="app" tabindex="-1"></main>
 <footer>
   <div class="foot-inner">
-    <span id="contactLabel"></span>
+    <span>WSSA Invasive Plant Committee</span>
     <span id="versionLabel"></span>
   </div>
 </footer>
@@ -211,9 +211,7 @@ const SETTINGS = {
   // Paste the Google Apps Script web-app URL here to start saving responses.
   // Leave empty to run in preview mode (nothing is saved).
   submitUrl: "",
-  contactName: "Marco Burger",
-  contactEmail: "mburger@salk.edu",
-  version: "Draft 6 · October 2026"
+  version: "Draft 7 · October 2026"
 };
 
 /* ============================================================
@@ -346,7 +344,7 @@ const SURVEY_ALL = [
     showIfText: "Shown to people who chose Research, Extension or Graduate study in {roles}",
     questions: [
       { id: "fund_sources", type: "multi",
-        label: "Which sources have funded your invasive plant work in the past 3 years?", help: "Select all that apply.",
+        label: "Which sources have funded your invasive plant work in the past?", help: "Select all that apply.",
         options: [
           ["federal_grants", "Federal competitive grants", "e.g., USDA NIFA, NSF"],
           ["federal_agency", "Federal land or water management agencies", "e.g., BLM, USFS, NPS, USFWS, USACE, Reclamation"],
@@ -366,7 +364,7 @@ const SURVEY_ALL = [
         showIf: a => (a.fund_sources || []).filter(x => x !== "none").length >= 2,
         showIfText: "Shown if two or more sources are chosen in {fund_sources}; lists only those sources" },
       { id: "fund_trend", type: "single",
-        label: "Over the past 5 years, how has funding for your invasive plant work changed?",
+        label: "Over the past years, how has funding for your invasive plant work changed?",
         options: [
           ["up_lot", "Increased a lot"],
           ["up", "Increased somewhat"],
@@ -377,7 +375,6 @@ const SURVEY_ALL = [
         ] },
       { id: "impact", type: "matrix",
         label: "How much has your funded work influenced each of these?",
-        help: "Think about the past 5 years.",
         rows: [
           ["science", "Scientific understanding"],
           ["practice", "Management practices on the ground"],
@@ -444,7 +441,6 @@ const SURVEY_ALL = [
     questions: [
       { id: "ai_use", type: "single",
         label: "How often do you use AI tools in your work?",
-        help: "Includes chatbots, writing and coding assistants, plant-ID apps and image classifiers.",
         options: [
           ["often", "Daily or weekly"],
           ["sometimes", "Monthly or occasionally"],
@@ -483,8 +479,8 @@ const SURVEY_ALL = [
         label: "Describe one way AI has helped or hurt your work.",
         showIf: a => has(a.ai_use, AI_USERS),
         showIfText: "Shown to people who have used AI tools ({ai_use})" },
-      { id: "ai_concerns", type: "multi", max: 3,
-        label: "What concerns you most about AI in invasive plant work?", help: "Choose up to 3.",
+      { id: "ai_concerns", type: "multi",
+        label: "What concerns you most about AI in invasive plant work?", help: "Select all that apply.",
         options: [
           ["accuracy", "Inaccurate or made-up information"],
           ["misid", "Misidentified species"],
@@ -1096,7 +1092,6 @@ function finish(){
 /* ---------- boot ---------- */
 function boot(){
   document.getElementById("versionLabel").textContent = SETTINGS.version;
-  document.getElementById("contactLabel").textContent = SETTINGS.contactEmail ? `Questions: ${SETTINGS.contactName} · ${SETTINGS.contactEmail}` : "WSSA Invasive Plant Committee";
   document.getElementById("previewStrip").hidden = !!SETTINGS.submitUrl;
   const d = loadDraft();
   if (d){ state.answers = d.answers; state.step = d.step || 0; state.started = d.started || Date.now(); state.hasDraft = true; }
