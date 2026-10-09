@@ -222,7 +222,7 @@ const SETTINGS = {
   submitUrl: "",
   contactName: "Marco Burger",
   contactEmail: "mburger@salk.edu",
-  version: "Draft 4.1 · October 2026"
+  version: "Draft 5 · October 2026"
 };
 
 /* ============================================================
@@ -508,11 +508,12 @@ const SURVEY_ALL = [
   },
 
   {
-    // Switched off for now. Change to enabled: true to include this section.
-    enabled: false,
     id: "info",
     title: "Finding information",
     intro: "Where you get invasive plant science and management advice, and what would make it more useful.",
+    // For land managers (committee report goal 3c). Hidden until 1.2 is answered.
+    showIf: a => has(a.roles || [], ["management", "planning"]),
+    showIfText: "Shown to people who chose On-the-ground management or Program management, planning or policy in {roles}",
     questions: [
       { id: "info_sources", type: "multi", max: 3,
         label: "Where do you go for invasive plant science or management recommendations?",
@@ -756,7 +757,7 @@ function labelCard(){
     <div class="lc-head"><span>Survey details</span><span>2026–27</span></div>
     <dl>
       <dt>Conducted by</dt><dd>WSSA Invasive Plant Committee</dd>
-      <dt>For</dt><dd>Scientists, extension specialists and students working on invasive plants. WSSA membership not required.</dd>
+      <dt>For</dt><dd>Scientists, extension specialists, students and land managers working on invasive plants. WSSA membership not required.</dd>
       <dt>Time</dt><dd>About 8 minutes</dd>
       <dt>Responses</dt><dd>Anonymous. If you choose to leave an email address, it is kept in a separate list.</dd>
       <dt>Questions</dt><dd>${contact}</dd>
@@ -769,7 +770,7 @@ function renderIntro(){
   app.innerHTML = `
     <p class="eyebrow">WSSA Invasive Plant Committee</p>
     <h1>Invasive Plant Community Survey</h1>
-    <p class="lede">Who studies invasive plants today, how is that research funded, and how far do its results reach? Your responses will guide the WSSA Invasive Plant Committee's symposia, meeting sessions and priorities.</p>
+    <p class="lede">Who studies and manages invasive plants today, how is that research funded, and where do land managers get their information? Your responses will guide the WSSA Invasive Plant Committee's symposia, meeting sessions and priorities.</p>
     ${labelCard()}
     ${draft ? `<div class="notice" role="status"><p>You have an unfinished response on this device.</p><button class="btn btn-primary" type="button" data-act="resume">Continue where I left off</button><button class="btn-link" type="button" data-act="discard">Start over</button></div>` : ""}
     <label class="consent" for="consent">
