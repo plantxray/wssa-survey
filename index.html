@@ -211,7 +211,7 @@ const SETTINGS = {
   // Paste the Google Apps Script web-app URL here to start saving responses.
   // Leave empty to run in preview mode (nothing is saved).
   submitUrl: "",
-  version: "Draft 7 · October 2026"
+  version: "Draft 7.1 · October 2026"
 };
 
 /* ============================================================
@@ -502,9 +502,9 @@ const SURVEY_ALL = [
     showIf: a => has(a.roles || [], ["management", "planning"]),
     showIfText: "Shown to people who chose Land management or Program management, planning or policy in {roles}",
     questions: [
-      { id: "info_sources", type: "multi", max: 3,
+      { id: "info_sources", type: "multi",
         label: "Where do you go for invasive plant science or management recommendations?",
-        help: "Choose up to 3 you rely on most.",
+        help: "Select all that apply.",
         options: [
           ["extension", "Extension specialists & publications"],
           ["journals", "Peer-reviewed journals"],
@@ -519,8 +519,8 @@ const SURVEY_ALL = [
           ["consultants", "Consultants"],
           ["other", "Other", null, { other: true }]
         ] },
-      { id: "info_needs", type: "multi", max: 3,
-        label: "What would make invasive plant research more useful to you?", help: "Choose up to 3.",
+      { id: "info_needs", type: "multi",
+        label: "What would make invasive plant research more useful to you?", help: "Select all that apply.",
         options: [
           ["plain", "Plain-language summaries"],
           ["open_access", "Free (open-access) articles"],
@@ -622,8 +622,8 @@ const SURVEY_ALL = [
           ["no_diff", "No difference"],
           ["unsure", "Not sure"]
         ] },
-      { id: "engage_more", type: "multi", max: 3,
-        label: "What would make you more likely to get involved with WSSA?", help: "Choose up to 3.",
+      { id: "engage_more", type: "multi",
+        label: "What would make you more likely to get involved with WSSA?", help: "Select all that apply.",
         options: [
           ["travel_grants", "Travel grants"],
           ["discounts", "Lower registration for students, early-career or non-members"],
