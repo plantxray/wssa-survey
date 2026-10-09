@@ -211,7 +211,7 @@ const SETTINGS = {
   // Paste the Google Apps Script web-app URL here to start saving responses.
   // Leave empty to run in preview mode (nothing is saved).
   submitUrl: "",
-  version: "Draft 7.1 · October 2026"
+  version: "Draft 8 · October 2026"
 };
 
 /* ============================================================
@@ -640,25 +640,9 @@ const SURVEY_ALL = [
   {
     id: "ahead",
     title: "Looking ahead",
-    intro: "Two open questions, then an optional way to stay in touch.",
     questions: [
       { id: "research_needs", type: "textarea",
-        label: "What are the most pressing research needs in invasive plant science over the next 10 years?" },
-      { id: "committee_next", type: "textarea",
-        label: "What is one thing the WSSA Invasive Plant Committee should do next?" },
-      { id: "followup", type: "multi", contact: true,
-        label: "Would you like to stay involved?", help: "Select any that apply.",
-        options: [
-          ["results", "Send me a summary of the survey results"],
-          ["present", "I'm interested in presenting at a future invasive plant symposium"],
-          ["join", "I'm interested in joining the Invasive Plant Committee"]
-        ] },
-      { id: "email", followUp: true, type: "email", contact: true,
-        label: "Your email address",
-        help: "Kept in a separate list that isn't linked to your survey answers.",
-        placeholder: "name@example.org",
-        showIf: a => (a.followup || []).length > 0,
-        showIfText: "Shown if any option is chosen in {followup}" }
+        label: "What are the most pressing research needs in invasive plant science over the next 10 years?" }
     ]
   }
 ];
@@ -828,7 +812,7 @@ function renderSection(){
   app.innerHTML = `
     <p class="eyebrow" id="secEyebrow">Section ${state.step + 1} of ${vis.length}</p>
     <h2>${esc(s.title)}</h2>
-    <p class="section-intro">${esc(s.intro)}</p>
+    ${s.intro ? `<p class="section-intro">${esc(s.intro)}</p>` : ""}
     <form id="secForm" novalidate>
       <div class="qlist">${s.questions.map(q => renderQuestion(q)).join("")}</div>
       ${last ? `<div class="hp" aria-hidden="true"><label for="hpField">Leave this empty</label><input type="text" id="hpField" tabindex="-1" autocomplete="off"></div>` : ""}
@@ -862,7 +846,7 @@ function renderReview(){
       <section class="review-section">
         <p class="eyebrow">Section ${i + 1}</p>
         <h2>${esc(s.title)}</h2>
-        <p class="section-intro">${esc(s.intro)}</p>
+        ${s.intro ? `<p class="section-intro">${esc(s.intro)}</p>` : ""}
         ${s.showIf ? `<p class="cond" style="margin-top:.75rem">${esc(s.showIfText)}</p>` : ""}
         <div class="qlist">${s.questions.map(q => renderQuestion(q, { review:true })).join("")}</div>
       </section>`).join("") + `</div>
@@ -880,7 +864,7 @@ function renderThanks(){
     <h1>Thank you</h1>
     <p class="lede">${preview
       ? "This was a preview, so nothing was saved. Below is exactly what would be written to the response sheet."
-      : "Your answers have been sent to the WSSA Invasive Plant Committee. A summary of results will be shared with WSSA members and anyone who asked to receive it."}</p>
+      : "Your answers have been sent to the WSSA Invasive Plant Committee."}</p>
     <div class="actions"><button class="btn btn-ghost" type="button" data-act="restart">Start a new response</button></div>
     ${preview && row ? `<details class="preview-data" open><summary>Response sheet row</summary><div class="tbl-wrap"><table>${rows}</table></div></details>
       ${contactRows ? `<details class="preview-data"><summary>Contacts sheet row (stored separately)</summary><div class="tbl-wrap"><table>${contactRows}</table></div></details>` : ""}` : ""}`;
