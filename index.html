@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invasive Plant Community Survey</title>
+<meta name="description" content="WSSA Invasive Plant Committee survey of researchers, educators, students and land managers working on invasive plants.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column (46rem) under a white letterhead band carrying the WSSA logo; a sticky step rail tracks the sections; one section per screen. */
+:root{
+  --brand:#4A7A49;        /* WSSA logo green (fixed: the letterhead stays white in both themes) */
+  --brand-dark:#2C4C2D;   /* WSSA logo wordmark green */
+  --mast-bg:#FFFFFF;
+  --accent:#4A7A49;
+  --accent-strong:#2E5530;
+  --on-accent:#FFFFFF;
+  --done:#9DBB97;
+  --ink:#1B2A1E;
+  --muted:#56655A;
+  --bg:#F4F7F3;
+  --surface:#FFFFFF;
+  --line:#D5DFD3;
+  --tint:#E7F0E5;
+  --sage:#2E5530;
+  --wheat:#9A7417;
+  --danger:#B3261E;
+  --font-display:'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body:'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  --radius:8px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --accent:#8FC489; --accent-strong:#ABD7A5; --on-accent:#0F1F0E; --done:#4F7A4B;
+    --ink:#E2ECE1; --muted:#A1B2A2; --bg:#0F1510; --surface:#172019; --line:#2C3B2E; --tint:#1F3A22;
+    --sage:#ABD7A5; --wheat:#DDB45A; --danger:#F28B82; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --accent:#8FC489; --accent-strong:#ABD7A5; --on-accent:#0F1F0E; --done:#4F7A4B;
+  --ink:#E2ECE1; --muted:#A1B2A2; --bg:#0F1510; --surface:#172019; --line:#2C3B2E; --tint:#1F3A22;
+  --sage:#ABD7A5; --wheat:#DDB45A; --danger:#F28B82; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--font-body);min-height:100vh;display:flex;flex-direction:column}
+img{max-width:100%}
+[hidden]{display:none!important}
+button,input,textarea{font:inherit;color:inherit}
+a{color:var(--accent-strong)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Masthead: white letterhead with the WSSA logo */
+.mast{background:var(--mast-bg);border-bottom:3px solid var(--brand);padding-top:env(safe-area-inset-top,0px)}
+.mast-inner{max-width:46rem;margin:0 auto;padding:.85rem 1rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1.5rem}
+.logo{display:block;height:72px;width:auto;max-width:100%}
+.committee{font:600 .76rem/1.2 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--brand-dark)}
+@media (max-width:520px){.logo{height:52px}.mast-inner{padding-block:.7rem}}
+.preview-strip{background:var(--tint);color:var(--ink);font-size:.82rem;text-align:center;padding:.45rem 1rem;border-bottom:1px solid var(--line)}
+.preview-strip b{font-family:var(--font-mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-strong);margin-right:.4rem}
+
+/* Step rail */
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.rail-inner{max-width:46rem;margin:0 auto;padding:.6rem 1rem .55rem}
+.rail-steps{display:flex;gap:.35rem;list-style:none;margin:0;padding:0}
+.rail-steps li{flex:1;min-width:0}
+.rail-steps .bar{height:4px;border-radius:2px;background:var(--line)}
+.rail-steps li.done .bar{background:var(--done)}
+.rail-steps li.current .bar{background:var(--accent)}
+.rail-steps .lbl{display:block;font-size:.72rem;color:var(--muted);margin-top:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail-steps li.current .lbl{color:var(--ink);font-weight:600}
+.rail-steps li.skipped .lbl{text-decoration:line-through;opacity:.6}
+.rail-mobile{display:none;font-size:.8rem;color:var(--muted);margin-top:.35rem}
+@media (max-width:640px){.rail-steps .lbl{display:none}.rail-mobile{display:block}}
+
+/* Main */
+.wrap{flex:1;width:100%;max-width:46rem;margin:0 auto;padding-inline:1rem;padding-block:2rem 3rem}
+.eyebrow{font:500 .74rem/1.2 var(--font-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 .6rem}
+h1,h2{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.005em}
+h1{font-size:clamp(2rem,5.5vw,2.8rem);line-height:1.08}
+h2{font-size:clamp(1.55rem,4vw,2rem);line-height:1.15}
+.lede{font-size:1.08rem;color:var(--ink);max-width:62ch;margin:1rem 0 0}
+.section-intro{color:var(--muted);margin:.5rem 0 0;max-width:62ch}
+
+/* Herbarium-style survey label */
+.label-card{margin:1.75rem 0 0;border:1.5px solid var(--ink);border-radius:2px;background:var(--surface);max-width:34rem;font-size:.9rem}
+.label-card .lc-head{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--ink);padding:.45rem .8rem;font:500 .7rem/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
+.label-card dl{margin:0;padding:.35rem .8rem .55rem;display:grid;grid-template-columns:auto minmax(0,1fr);gap:.3rem 1rem}
+.label-card dt{font:500 .72rem/1.6 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:.1rem}
+.label-card dd{margin:0;min-width:0;overflow-wrap:anywhere}
+@media (max-width:460px){.label-card dl{grid-template-columns:1fr;gap:0}.label-card dd{margin-bottom:.45rem}}
+
+.consent{display:flex;gap:.75rem;align-items:flex-start;margin:1.75rem 0 0;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);max-width:40rem;cursor:pointer}
+.consent input{width:20px;height:20px;margin:.15rem 0 0;accent-color:var(--accent);flex:none}
+.notice{margin:1.5rem 0 0;padding:.85rem 1rem;border-radius:var(--radius);background:var(--tint);display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;font-size:.92rem}
+.notice p{margin:0;flex:1 1 16rem}
+
+/* Buttons */
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:2rem}
+.btn{appearance:none;border:1px solid transparent;border-radius:999px;padding:.72rem 1.4rem;font-weight:600;font-size:.98rem;cursor:pointer;line-height:1.2;transition:background .15s,border-color .15s,transform .1s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-strong)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-link{background:none;border:none;padding:.4rem .2rem;color:var(--accent-strong);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.actions .spacer{flex:1}
+.step-count{font:500 .75rem var(--font-mono);color:var(--muted);letter-spacing:.06em}
+
+/* Questions */
+.qlist{display:flex;flex-direction:column;gap:2.25rem;margin-top:2rem}
+.q{border:0;margin:0;padding:0;min-width:0}
+.qhead{display:flex;gap:.7rem;align-items:baseline}
+.qnum{font:500 .78rem/1 var(--font-mono);color:var(--accent-strong);flex:none;min-width:2.4rem}
+.qtext{font-size:1.06rem;font-weight:600;line-height:1.4;margin:0;text-wrap:pretty}
+.req{display:inline-block;margin-left:.4rem;font:500 .66rem/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--wheat);vertical-align:.15em}
+.qbody{padding-left:3.1rem;margin-top:.35rem}
+@media (max-width:560px){.qbody{padding-left:0}}
+.help{color:var(--muted);font-size:.9rem;margin:0 0 .75rem}
+.cond{display:inline-block;font:500 .7rem/1.4 var(--font-mono);color:var(--sage);border:1px solid color-mix(in srgb,var(--sage) 45%,transparent);border-radius:4px;padding:.15rem .45rem;margin:0 0 .7rem}
+.counter{font:500 .72rem var(--font-mono);color:var(--muted);margin:.55rem 0 0}
+.err{color:var(--danger);font-size:.88rem;font-weight:600;margin:.6rem 0 0}
+.q.invalid .opts .opt{border-color:color-mix(in srgb,var(--danger) 55%,var(--line))}
+
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));gap:.5rem}
+.opt{position:relative;display:flex;gap:.7rem;align-items:flex-start;padding:.68rem .85rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);cursor:pointer;min-width:0;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--accent)}
+.opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.mark{flex:none;width:18px;height:18px;margin-top:.15rem;border:1.5px solid var(--muted);border-radius:4px;background:var(--surface);position:relative;transition:background .12s,border-color .12s}
+.opt.radio .mark{border-radius:50%}
+.opt-text{min-width:0;font-size:.95rem;line-height:1.35}
+.opt-text small{display:block;color:var(--muted);font-size:.82rem;margin-top:.15rem}
+.opt:has(input:checked){border-color:var(--accent);background:var(--tint)}
+.opt:has(input:checked) .mark{border-color:var(--accent);background:var(--accent)}
+.opt.check:has(input:checked) .mark::after{content:"";position:absolute;left:5px;top:1.5px;width:5px;height:9px;border:solid var(--on-accent);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.opt.radio:has(input:checked) .mark{box-shadow:inset 0 0 0 3px var(--surface)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.opt:has(input:disabled):hover{border-color:var(--line)}
+.other-input{margin-top:.5rem}
+
+.field{width:100%;border:1px solid var(--line);border-radius:6px;padding:.65rem .8rem;background:var(--surface);font-size:1rem;line-height:1.4}
+.field:focus{border-color:var(--accent);outline:2px solid color-mix(in srgb,var(--accent) 35%,transparent);outline-offset:0}
+textarea.field{min-height:6.5rem;resize:vertical}
+.text-q .field{max-width:28rem}
+.text-q textarea.field{max-width:none}
+
+/* Matrix */
+.matrix{border-top:1px solid var(--line)}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem 1rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--line)}
+.mlabel{font-size:.95rem;min-width:0}
+.mopts{display:flex;flex-wrap:wrap;gap:.3rem}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.pill span{display:block;padding:.38rem .7rem;border:1px solid var(--line);border-radius:999px;font-size:.84rem;background:var(--surface);white-space:nowrap;transition:background .12s,border-color .12s}
+.pill:hover span{border-color:var(--accent)}
+.pill input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
+.pill input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:720px){.mrow{grid-template-columns:minmax(0,1fr)}.mopts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.25rem}.pill span{text-align:center;padding:.45rem .2rem;font-size:.8rem;border-radius:6px}}
+
+/* Review-all view */
+.review-section{margin-top:3rem;padding-top:1.5rem;border-top:2px solid var(--ink)}
+.review-section:first-of-type{margin-top:2rem}
+.review .opt,.review .pill{cursor:default}
+.review .opt:hover{border-color:var(--line)}
+.review .opt:has(input:disabled){opacity:1}
+.review-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-top:1rem;font-size:.9rem;color:var(--muted)}
+.review-meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.dyn-note{font-size:.9rem;color:var(--muted);font-style:italic;margin:0}
+
+/* Thanks */
+.thanks-mark{width:56px;height:56px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin-bottom:1.25rem}
+.thanks-mark svg{width:28px;height:28px;color:var(--on-accent)}
+.preview-data{margin-top:2rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.preview-data summary{cursor:pointer;padding:.8rem 1rem;font-weight:600}
+.preview-data .tbl-wrap{overflow-x:auto;border-top:1px solid var(--line)}
+.preview-data table{border-collapse:collapse;width:100%;font-size:.82rem}
+.preview-data td,.preview-data th{padding:.35rem .9rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.preview-data th{font:500 .74rem var(--font-mono);color:var(--muted);white-space:nowrap}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+footer{border-top:1px solid var(--line);padding-inline:1rem;padding-block:1.25rem calc(1.25rem + env(safe-area-inset-bottom,0px))}
+.foot-inner{max-width:46rem;margin:0 auto;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-inner">
+    <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA5AAAAELBAMAAABdXHS+AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAAXNSR0IArs4c6QAAADBQTFRF/////f787ffs3OrbxtjFrMKrnLWaiqiJfJt6bY9qXYNbTH5JSHZGS2dLLU4uJ0UoVJ7UXAAAAbRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0n77u/JyBpZD0nVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkJz8+Cjx4OnhtcG1ldGEgeG1sbnM6eD0nYWRvYmU6bnM6bWV0YS8nIHg6eG1wdGs9J0ltYWdlOjpFeGlmVG9vbCAxMy4yNyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczp0aWZmPSdodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyc+CiAgPHRpZmY6SW1hZ2VMZW5ndGg+MjY3PC90aWZmOkltYWdlTGVuZ3RoPgogIDx0aWZmOkltYWdlV2lkdGg+OTEyPC90aWZmOkltYWdlV2lkdGg+CiA8L3JkZjpEZXNjcmlwdGlvbj4KPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KPD94cGFja2V0IGVuZD0ncic/PmeL6R4AAABkZVhJZk1NACoAAAAIAAICEwADAAAAAQABAACHaQAEAAAAAQAAACYAAAAAAASQAAAHAAAABDAyMzKRAQAHAAAABAECAwCgAQADAAAAAf//AAClAAAFAAAAAQAAAFwAAAAAAAAACwAAAAVCdkC4AAB3UklEQVR42uyav1MbRxTH9+nHpH1fsCGlaAJ08gyJMZWYUARwASmBRm5SmCLQJDNRFbeqZJfqjBujziYz6G1p6STt/VG5vR+7JzMpUiwznrmP7nT33i5b8J3v7r4dqQcQ08pvf4Tnz1OwqggHMeojbSyxNkvEcax1krUPi33XWSprT+/Yx7ZfmnLj2StPDagSMiSk0DTyCNxUQgaG1h9FyEk1tYaFePtRhIxaqiIgUHwkIkbsl0kuLdlHsqzW4ll+N8knveynaI6Tu4izMfOv+1blyJCwonMR+XgrMv74FTb5IF5Cxv/V7hFZpKO3KyFDQop6ItOdH0cS/ZxysLNT3M/j+yxlo+Txk4l2Dg7yOGHXfEjSWZt9OZN/8p7Zw/KL0e92nhvRJ5WQISGu9UU+KXVo5FdFRHme7b061N2y5vVRxMrD22awNFZPX6mvqP0lszY/NZI0VQSEsDoSW+TV+zpqA8siH+vPPkVYGc5LEyT4uKwO4amZt6HKALsmvlbcuBU9UBUBITRTtxA2jX5DUB4Q1qw08Mr1xh1iRUV4oU+8PQlHMgGUhwhPhnragqoNRb6oinAQ+Du7filC7bXM98HlNtT6ugtQyYInzIo5b+5Jp/AuAyt9fYXSAAzQmTGnBFXriUyUqlbJYBDSMrKjGPx0pD9wSQli4EjfASj6qr34ygmpUBvet7xquX29WID6Qet3bP/+QiTiSshwEHjPyLzNTKAjY7oE35aKs/BzK9SWGVChB6FxO2WvGr+0CyovGbpn5s9IkeJjkXmrOtsJCPOFyKzF9q2RLWgOJkqmy2uC28iux+/Ja9eUScmQ9aHugpSHeNfEb7L+e0bGnUrIgDBdikRga6D8H0+uwiTghZmQcyQ344kXktbiGyo0tuadLXuOGkMdtayfib43IpWQAbGeE5lQKmk6FXZUbqs0h6YsXElhy4iIfLQVD8jNrDjWN+SkgvXvkdGvCLDxmpG4WwkZEKoPRT5Rvl66zUkupdVW/+1MSLXhfMMFvKevvZCrI92lUuEBZJsn5tScIvoKqiIYSGv13IO2XFjYcqHECzMFq6JDUkh6W72UU7ildtPMWsorCay8NvN9IAvr6alDpWQwmJoi+ndw+o4H+x3ihrbaURbaIwAv1uV433XFhX5P5dLDHjC8JRSVSl8kaSeuZtcwgNbseQBcDXFo9LVTOZ1cL/VbVWAP5ZyQtaFfPlEfyelS7bHal6iNwpHUE/mCSshgEJf2kwRCvSezNjFyJZk4mVu5iHk7Hth0yupoVpgXvGWiDZSKEXVo4leEwpF0ITKtNjsBwbaR8TN4YTdNtt/xi+jIdIoY6+bGCdk0U3JWvizPrAA/Gek7gLlIHIvMuFojwwF7sLPhvEKonZnFvpeArEbpWmcTaJo7J+Sa+UzIOzVG5TIRqJ0vj8J7IosWqW8NeuRjRbB/+V8Qn4tEG86BWdVwB5egdNZsJSFs1BhN3ZGpLSPhfvfzLztX81xVkcXvgTDrc0JQl3klENkFcQR08/hQPsIi4UsRporAiIpMlYBgObKRobRmjJsRa0bNaoJKTHZjFN/tLQl597qfqnH+lzm/c/r2e3kfxcMqp8qqOVCp233v7e7Tvz6f3fctc/uG11b1dLSRJLG8LdfUzq9OIv+3KCrRz+9WEzvftTY4SC8PFcU5YklacWghTIqbTc3DaZDhoaFm0N8SSZr1T9QG/kZYWgDJVauP//+MwC9KhA2mJWpTrSLro7+Zas7kc/qXcT18oznuQEo2kU+i1rAOeT2JHxP7drK2kYCEczz9a5JIfsitX4YXSBSm/pEJiZ0w50AmJH2LObXGY9CtKDJArVPGLoWNekaMK3i2WZt2tmiUUvAp2thIniOueURqHT1JrRG3TSj3eIP7tLTmTXooiswW9rJwJ67EHV1VjYmPs3dz7Vz4ZWqF26qEBNTqh7obo55ALhiQkkYqnpOpU9U1Y19jKsoeHw5nSdwrmvFzH6SvaB4vAm8rqj0/hLLJ7M867EHVDGDqu4HsJibq2Q7+UVtxEMLWq3T3g2XgM0axsch6vzFRBQm3P9BSgh0wMQu5YkvcJuo/epWU/OvtwukZy5KG8GWqEhzpuFMp0W0xn8eybnFl1Aeoz2OPqhq0eMaW1rB+UPuZywanNGRO6FXX6LHfnGEa+gDpd1N5YJLutdLvCbTff1Bs0pdG4Bg+Kklvre4ffoQvayLUSnfbFvOUe8Bsnkq1QyWaP/gnWb3KWHRgsTd9PzlHcQ+F2h1hoWcXtZs7A04fCXdNjVaJS5s33MeUoFvp0yStaVWM+o5A0GHb34pQ9Pt2ie7acOzTpBD6rx7pWEvcGldqtTUC7hmidBM/hlPh5S3gVJFUW8xsLEvcM/bON8X9SZbfFN/G54dVs2pFNWO7ynA1q5I6NhG8ZRYHzpcGBFIScTUxbEVKt/sTJq0ncVt96of7x3PDz5x87fqF4zuYOoCkJ/efvHD91eNPc2ZADkCGS0WVxFR17Z6m9nrigva6bxQgUp/WehA/pTO8mBdXWTBEjl4B79Qt5moOlSY09vfuhhAwWqdPlHNuvGhD0RzHDqTDZtvJrbEB2pGZolQgl3lQIHe+U9G1qFpRU/e1dMDvnMuefaeL3gaQO3vUI646kIrXL1w4sf9pAaeuVLrlevO7C6VSPn9te9Y21cz07J/tTmP++l7G4hpqdXOVpFfnQOSlyE8tATmSbiejRlve/SZo28X8h0cZEjmM1xJVjPcgQobuwGJo6nvCVDmDqh5xpK7St7y1WB33SwSSBrc8F25G/g4XS85qpZanqcU5CW98ryi/eiXkKzyYSJI8r8yEEn80bDU6U5Y/TpMOSPSywK257Dm/wIeaeDTXqxVWdI5o0WrQRmFP3AfAl/B9Z4E6e/ybD/bVoqdCnc4JbZktixxUlHf3tqUaed3BxdK+jdGG5o/VdEQbfiqrbu6QTKShY1jW2TLCvJnSaaoCkjfFJ5crFasW6AttG6Tr5O0a8J8BL3jM/gf08wn10iCWoTsYwupReL6p3hyWKPVYGDNhmqwgN+IhZD4SznJ0X8OViJx0ncUjXRSnyvB1XTt6MGCOTvj5Io/0r1FnciaPG5rCv7ObQYHExVpaEUXySHe9Asn0h7X1oWx+sDfDC52eieqQ2dazYTVOPp6lg6HtTvMKZ7Th36l8h7hH58tQVB/7NdKdxDFX7TURSPMk2toub2sd+E5UtdBzyg5rMluGXynCgz0ts81C1RazkD+mutXB0UBSfDcyr6PCTjGb28t2WgTbyazUWtyHyrC6J4PoDwzkrjJ3Kj9lq1m/YNMkdqRr0e5ckbHEd6IHWEKY6w6yzfFDXfXlPDTRWv+BnIs8Nx2HN8L7Ka/BO0Pud2yE4VvKaOjzssJVzdGurkFBE7GcKmOhWuUy8rkJfaGAgbB6qrYL4wUS+UboAnKu55SdNibXXyzCV9vbAlw7I/5d2qXyY5F2WwNJoKRy2HQd6yDrlRV2lppMaMUeeqU1q+dE1BirJR2EMGEH46Bv1cRczA0mViR+E3zeron8dibiUcJjM+ZHhWT4hVmrhh4NPinfw28afnEx1pdFrC9Xj1IHkCiNlfrU3Vf3n/xLiedvJkXlc3332v4TrxtgAFJGTuVGq8dGRQc16yXXtobdKOmgXo4A1zOJvWy+qMXG72tWrFZP8/rxF177ojBeMh3zgYXES2zuTk8gz9j8yMh7Rfh0tBW7Cb7ayK9gmHjM1KcnDXaHmxSzrjUAqVbT1a7VbpwpVxRxarnYGngU51nnpshDPRuIkJO4kYOqDxZkrPDF7JnchTymcp8yzhofvnrixAWb89VRAiqHWvUvWf2KxxGHc9AP10+cOPG6Thbo3rh0Rws3gP1e5uzJVwrT6TEyy6y4gjvDFlHdJzhGG2dd53nQsHtt50CEPfMJUhOXHPGRRVUzLDGtMoZnm+drerl5xnkBj6dzQDmP5l6btcXTE0js3JMHCOVtJrMYBHcHW/wP4LBB/GBLlxyfsfIf5NuUy4JbhAPmpi6QkcB2sr6TQr9sk/Z9C3z4SQQeEEjsrikD99j7590RVjKRnDFTozSSg5ZqCFSehPL6Ydxe3+BLV0CbLxYK12gMiHWG809ECPWl2zXmzknB68qHYYQp/cSBRKZES+4YZoLVsoxaJC6VlD0UoD3QeQ3XT75hneMGT1RmXBxKwYIJl81kEdwhbSLcgj4lBTWoJRLQNtPuV5yXj7Rwv2ekOgNRRVNbPQgRt3aoGssrf4eYNuXN7bimx3xFKLPfoigyUaiJt1vm6SwxU8KDN6vX9alqaEpngwYgTMfjlZmw7mEBbB/M7yr/02DYTCdWIsZMGy9Ce4st9WDGxF7ONt4wlYsB/aYwTekM4nkl7Jt29P6ceSjC+L+rwKqJDB229AniQi1ADlfQUuYYNcYFEwGFoTQHtDjb+CZWF8bHaBVUlwgd6wJQQyVpf8gVDVIE9Ka1p8SoB79s2ni2D5DrZm29sQ5sZwjN83iTY/5Ihbo5ZQixB/0ikMR82dh6XHUEGzuefbW9EWxKo1C5sOv/WIavxu15nNZ7X98YhAif6JneG40nbk3ThikxHYRSnfHYui/yBgwVRolTCYo1u7pAvQJJKG0JKsyMZlxSb6IR2LYZF0mRHprVuUMyRBtq7TAoTZGvYMD6wCQ9OxyBFEC53oHUt12I9YYtfXOyoaiFqiStrs9Jzzi5VGOOLVaFJWrsseA/ApnZYqVdRW8g/Ziij+tgGVb3tpiqtpgxBk/DiTDeWDWNuq3EeVdL39XwEJ7aWobbJEkiFdgy3Bsnu61zG/DGIIT1kUffpRqmUriMGUS8o3MTgXSJxOIxDVdAaJmGolCwqWK6BCCB3abcZgtzBZbdxK5u7wByI3qbNtHQJyeK4O4Fu9AsezqHYS0AJOxRBSRmBoN1iXS6BCePmJJErsSwlNmATGcsoB3qnpnLTNwnMZWknTYApBJjbD3zKrQefPnas3hvZQ+1JhNW4JxdIjGOXpT94ZnGOGomwjSKogn1ynqvj9vJSdwPlvnq3pgwBHtzuPlwInNo3CpS1ONawPts7t2Cnf8hMoXiEokSgJkUPFEBKc7a7gLA6x2X8wTkMEQymqlEURvgoEql8u6kz2RMVP0rCHiAGKBkLSChLiuJdLnFoJp1rHzYeaNiEtJl7shpFFzRPxUXCQqwDhOwubgHP68CkklOQ513kQwV4CNLRiN8DQEi9owRvmIeFZ8zuqSIY70gfhQFUOeMCJp1MqZ6aXcRrpCnpwmQ7QqaMaoSv8Ozj/CjSZgknxvKIpcNIOYqf71x7CffXSL9JVZuLHZvSaQBQ5uKRh3QeQwOPlAPhK0Mb68dyLHCZaNaUugAoJhmBbv+OqLrfJy14EA2/WtuvNAAr7GPkSKvIyBTnXYverfJ+pzW5tCLH7lp2xkmXT/hLApJtRphXegi5l6bH+mkP/HIR4XuhJAbSkZUqFvM4hzZsUhRmijP4uEZfG9H2HSuuWNbfZ3svrSS+udNzZ63fWOCeHNQgp1yU8hSmZcVN5hDwA4tQbU6vun07LTbyASkkeJdN30WbWQ6M+blH0aF1vzwUOWS+DbPpXwpE46S6krd9RyEtY5lDiDTnSSR/hSyYpPEDCCXJ9CCrUInl0gi9oULVJ2wfsJblIDMp6v6oZ7fJ0LN55Nxpz0GIRYsWNAa8zRutHkoL0yDb5s//8yOHTvevcukdCYeJxffThZxIUhtpT7tiPLAQMJ8mBZyzX4mRtyjZvDV95xzIIfdRmZVJ4dLA5LXAMksZ4pJoNKSSKs3a1vNXyLyZQM9Ux1/WFIYAHDh0UP7zy+o1uySyAQkCCt/0rzWiXx5zLMQWCQRyHzKH9uwdpHAtrpvSGskknRd9AKS8dSkVEBKtgVBCNZfxGNTGb7Uol7FI+ey+eXPPv9G6bO/HxNWFyZMxVDzsYDg1oFkxX1GpXuU0vYgXXqUnzGjzDz6cBaXSOEbNepmnJ4ogEUPiZSxHy9LD4mU3T8hhO2USHxLn+KRRC5f5bR4gAexXXamjlhn7btOl0pbA30l0pXhf86KAVmsVJkDSkAW9bQLhRRQWwy0u/wrYWY7gJQzzfEeErnmnLkS7Qxl85hYpBRd7HIK8kikfS3L5pc0Qei/cBWafzte06OScdtw2PdL0JbbWwQeKEbiM4jNBgaSTCzCZWzKYmoaLjqEgagtnpZeEkkj181Z404gN10bl26JhPEt8yqJm4gnLEjwyYZH9fGye783rH7NSdH5ASRSB8Xe7INRVy2wURFIF2nxXPv91DTyCo0rvSRStl6rdQJJfs68XgkgdKUFIUeBHDz9uLsoRkOLzZPI8yYqGx9ctBSLZ/TCVXhieI143akifL/HTjagITRuPyMwuETuriIFM2XhwyJfMP+STGImiTolEmU83SmRIMba7pJItBz3RrqAxNFCD/BIXtxnHgMkre0ooGC57pOHSWQ8maAlAAnd6gZYTO0UBqQFKXlyBh2L4X21bmcHw+n7wcB4a8/aT5qHe9vT1x/+FTNiVLVUjdC5EdRo6Jj+y96XBudZXGt+Lcnmzr9uSYbc1PyQbAN2KlNleYHYt5KSbItwDZORsU0gOInZEhYFMCELRLkkDtywaMYVlgCGGyoBAkgi/LhmsfTOj5nEku33y6QqezK5UDWBLFMD+pVgqESa85xz+rzb90kfYG5NzaXB9vf2u/Ty9Ok+W592bE6eAuCOKwHBhSwejocDcrR7ZlrGEXucZRLywsHtipcBYrToeKprpFPTYhlItiCXKFIY4AnRO1SBTKN/Z2T9vLw8ZEDK4F+MIjNoAKSoFIzcqSQGEqwgNy/XjoBhWaHIWuMEIfWQAYkFTS0hEI+YZMUDJ4AQVn5pqkG61PMSyuZkYczp+sOkS7mkVmDqvepBWkpU+tJUxmhg7mNy5YReBs/yfc0XKdKSK4sflqoUWYtSTg5IFKc62JxnCQEJ0sAyzS9bjy1GkchQtAFk2B1tWZynQDp5R7gb+zSKrXCtzMXXqmkbWMGC10i0hKj3quxixhPdN6UNcISEYbuTFTnPFg+pSPwyVjZEiPQtAql9Dj4XszLYBJ0D4VMNC1+VIrPUGMgqRdbCsEx1BSDfJzrY85zwrZGDA9Nq9hjzzliMImGmVSChul+l+l35pEytNsUzp5aHorJGyvhtCCSUJEUka8tYcOBKhhj0CNzLVKNECloX2oahvmDkwPrK+9wBJlYS845eaBnIDlm9AGQYpX9H1HLAGk/477kSRVpqnSKdcqLJngKQ0tlk+9EuwNLvuK9k2FuPgjgWpcggXtYeFOkxl+saYRTp2TgfdcmWmBBKXGvT+dUh/s3aWsEzg1p5hlpC+NrT8vdsD+nvDLvx4r9k/mffdEpsrukeYYuHswJZo922LaVZ3LU6t9akO9gHh2TjR0SUhJuJJ+ntIFqYUaSrvUWKDEGZ41ASrpFgag8iI0tfqRrfF6LdNqPIR3PrXZA4RGSVwwKP9JzXNfKYcK1AiwXBmLwqfEoUKd+qlZOYhx7f4WXg1Ly0EEIIExpDEGDJ+ezZyVSzlDy3bjSdUY2xI4tHyl0QPYKdw1e7LxhHU1tnW2X1wmTsl0DSYzeeBIqzjjSaI4wiPTcGf4oUGbzMbFWKtACXAm2eImHv5VT/JtcXTaC/eChVHciqFKmFKxxKIxBDQZG1Vca3QmHNorFVo+F2NQVS2UbfZE5D5erHPreWqm9u7bwji9Td5zGmYts+MlEkx0n5oQ2+H5yOjl0yZdWfH1C2B03Bn84Nd9RTcAqtAwmTtyiiQe9DYZW0B+5dafS9MIoMTsdMjiInlSIBZpUiNYW/5RwLM6PeZNo6mlhMDet4Oa0y3s0pUrrAnLsYSBpjcW51QSiSwd6k6Fa/bhTpg0MDXVMg4dd33w4PxHj0AsgoBwZO/rSp8VTgKyQDM514TJ2uYfFIjpyHFx0qKJLlygsmxKemNSBNgaC25I1p2g9FpzrSQZ2sjTR7JPoLf5fXyMCpMUWaRgQWjaJHGmcakkqWo+oRtzhFGoMdUIECkJAYTSfgFUhP99QO1pQi8THGpvFKdDVN10QsybFb++JK6Zl+u65mzYymqw05RtMujECH0FyQslo8bNxgUJxxR53I/osAsmUcnRcdHb3hqAd6oClXkZmmoSFfoMj4jtGeAqkrlGtCkTbejTOxx2Iz6/ewvy8+ATqFed61RJHwdXOF/Q8OQNKVza0+xDXSGZC15hSJ1BRIKEAPdl8xQR39+JYeBwwdig4BlhCwLGgFfMcWSV9zoqjbIGySj/4e8F+6gD6fPrFjWfrmgBQ2hCBzI2BeVf5wiGsnJndbI59ZvmIdhege3BHnHadEsQL5g5RfpMhFgITJDrmC5A1eFlo2mU0SkL5FioyVKlAkdGXGtzpZI4H4bgOyCUVesnwdPrcLcktDIDGe2wbvJCQPfa5Pt/KFuF8jvSVK+42nVPudHIVDj1o8oFnipdzBgrSByDGZpFUYEv7QmwBylSpbiWPnjX8j0UV0N8kABYo8dPsDTx4YS5KfSicbRT7/wANjY5T/k2Zcq/CE4yUgPekzlUVnt7ZaQB4s461SpFYKhdd/6rwBCQdHm1vRS+fEl4YXocipJ7gt9f+6z3nfCMirmedzK65MUqKaLT63z8iZO1b3RAm96nqJAUY6A3G1QhWdfKiLVsek/sQOL/u+tr8JZucU7XR6Ea4s4NtFDTUMZwmjSPFrTaDJ/35JjkwSOPfzLOebrZFL05IkCqqG7GxNgw8+0DMgW6BIc7alSplP4bk0ACVArqgAffDn6EtueEGKhJoZmxxSFpQadWEYoZLA67WdRStl/SgRTjADeI33hLDvWFN6tARn8y5R7nmxSodA5HgTkfrkrQO1CGTLhmWn0tzdbLXCe9JZ/ZBLDoeMIi0BsIxrzefvW5gi8aahozIDDUl7/TlW5hiQLXKtVqkcRR4CkAS06Vu36Z4apyx6M67VEpieRkDC0PfPzPM54izJOfo+0A5bz0CTsIRsrzFBViG0q3EhyQBOd2bAFvcAZhWL745eZl+74dj6JoDs0H4Im4R3Xa2GLHKIftQVKJJ3ylBJ31EgjSLrKTUpUSCrFInHTyqukTa7ykZAZXjYpGNA+lYpsp6mjFf0BQeQGOHD0b+V3jskQI4uwrWijbznp+QabBITKFL3Z7pBIkqSKfvElxSZbbwnZGNB9JgsIjoes470qsUjiNkKsiP1I9hhFyKQ21tfIzMufjd9O3ilnb2Uj3m8sEbexuvRxD5X5FqfuO32J5G/14c3x7VCbMltqEmp2l4pcrpVinxeKjW+z5gdrO0AUl3R04GMIsMIOvLQAhR5/228SEIr3HCNFCAdQ6niHit62CVAzcOjU62k5POweLgQxa4V+jEIYkjsHvRmplax+DyDOsK5TEH4joOep0iRB5cvZxZxoESRj3RKPg3Nplzr31QUAtnWqDhgJVpp+/ibkyO1cAuQWYtAIp6CFEpATsapFWlBrnU58a1bt/Y11uwIRdoGfVbA1CextZOTd7RWgN4qbCrIsMzxgDVyXlTwbsMdScoqI1G8c7QCArLWclK5bRpuogedA/PKoLll8A8wiuQ8sBBOmmAUOclyJOV7ermZHOnDeySnAqTQJL6i7qYov3XNjhWebZV3mFr5R+RbCUg43DJFqtDcVI7cQ6/pitUcyMyY6VZeCS7zcWJfAaMLtFZMtZxu8aqdFXIEs+q8NRaWmqFay8nVVN4gpvUubv4oX6NhQ76sa31L1g8AuToVQ2C1fO9Uv6wOjALkc77FNfKR8ieFIpEc5tZxKCy3pYfkJbWmlStctkciNQfS5SYUZl+JxSGi9LxU1M7Ed1pKz/YIFfvOQWJWiRzFN1mT7+Zx1fIiiYazr3nUyHlcU1+sMqYg07W+NXuk+fHDjFVKzCIYkj/3PgBI1Kc1iqwC6QxITE4yPDalR/NADi2ka10wOXCthcq72oorkjRJiZpsb8miaZxnoGleaCE7jtdBjiz95ihSdzC0nM5J2Xi/STd6eLrGLEeNl8++bXukuXWAhSinIIpjkA4w4tOExPf9bVOk15l0migSThN8T2SLE0ORTjo+sEx57Ia1bBHejaa0gGV0KepU2bEPFc6EHh9AkS0yO6ajQxeCaQWQyuwNnUPTqytRZFiQIputkUbmwKmU0HTYDnBbXK6i73sIb40iRfxACmgKUv82KKlED6tm0bdEkc4TkMn3C0MMag1mX5OUOM4AH9wWU4IO8pAd6/XHd/aIVsFaw1xrvfVodGajGwDT6jNVz3W7SeHqSmtkXnBoTJGhgV+rqVSe7y0YlmMwMbDO2EXMrziV9frfAkXSy17FD3PeY751UypAegFyn2tujyx8rLqr7kvjY1lznRCQC2BfJ8fTMfKgPJlO8RxrLY2TLYuYVTob9NY+L1bpfLT6bnqi1TPs8Z5nWT259CEFKuhWqmHrI+Na83HBXJM10jXkWjuVNQ7FYBAiCXNkGVVxRxEhsSa0TpEwnji8rxRpG7KnDchN6iS4KEWq+rQyfaxYt64vH3kpjl66QWlLL/5tOa0N+rgaNy1J5elGb6sU6azXb4gOLq5d5LNRaGqaUqTzTSgSasMqReKb5T0pum8bGlbbrY4idsv0598sRTr24SwACeAA/VUEpEXJYSNdCxTpQ8VBWZCrZJv/m8ggtVaSvaiDxlw9ipG/WgSSCxUd3X0pLCC8G4a5jefGk7387YZedGysaejXClGzTJEBHJhKF5oUwJzDtwLpnfBFd7k3SZG64ZXFqR4rV2bsceWCdafmYbc41+rwuQqQsBeGytuAPALt8FDLG8Z53Jtnd1nrhXHhWwZSBDd1ZfGo1Ihcp8alVykyrOhFQ6tAcn5174fq/YrmyE6oT0wGQalshtymhpI3S5E0Ty0PMjWvMQLir7IzV2YhgAfBYlwr6rSut/KcXzh2aeyvQl7zrnf2NVe9b6xIi0l3sYoHopA0k4QKC03kSPexe5kiJ/JABkL8pnsAsFFkPlpA3EhjH72AnvUOozFoDIcEBu3VcU+cy43TUKXI9gqQV92Kmc0oEirRGOyJo71pVAvsUXf5nvYNKbLrgc/WWk7/D0RrhyOyqDdjrNj3KbDosKLPjs/An64AiVfbJzhIjwJZMyCHpwpCvp0bpeFmzHyISQ89CriCs2CiOp8ByPFmfq1wxP2Z80qRmuCCNG5lh9D+oHBSeSCdsNoVIE+uP/KORvl3IMoTWYKIBsBJgBS9qPW7UaQBCVvf1DMVIIHGUoSJcxUgu8ZLU7PqAgciPyHxRcAYB3mZTXHZwg9t+qJbBpawsjgIRdo2x8LUKkKq2rziIBFLUhlIv7H+9k4ZW5gU34EzdtxF0la0Lh9JYMZnxFMGchUAKzI7yKbGY0+irZG2v1tj2JTUXZh8GSFHL0UgibBE/vHOWMHQSX+aAWlBglcRCXkfChQZNtmotJgeEjIvp5ypUKSEvMAe87eR3ImktlYSukfbgKIjnRHN+fIaaUCemz7SEMhhYGNTaxx1Qda2UlQPPyK+jDK7gSI0FOAwV+cZuidsMKWz+xsCOWkUCSCxq1uAtLkEcQ2UIr3hyhF5vOxFxBR6SYUiUSy2sr+zUJzgrztTZMUc5X4QwrkJRXaOoMvBtRa8LBA5+PqaLwMpNJYQGRTLhVOQ5JlCiSQe3qU1GbfxiLNh9z/d3YwiH3WZPY5KdNA95ChSPek5vouxz+K+6rw8MDzNYncRyJpHcIm3PLVKxYNYmxvfZ1EpnEAw42aaGCnWrHYmyQWL6hG8rCndwpJ6ADkeKTIgjAOmoyLXGpxEPqlrAFNLoLwhAxKyOvQ5TjdoYCYWQyP7aP2cO2RbakB6l18jXcC+Ssg3WAaNIj3U9amsExaOQOOEQk7jmCh1OC8bRboYFX81GaPfOpAu5FO1z+N9MSufkISOKy2JqlvJSrA4O7qjZhW0B95EOY0CAEVKMiQWGCSiopCJiAhAU9Jua6g7DTMgGGlMI3ESl4SIcY/mKTIUKJIVARIDBvTEYZ6sjLhV6Dmd5JWzO9bvtBO7H4KHi6mY98bw6kGiP72VZEBi8mwEJHJ71ffuRAIJV8WCA+I23TOcn1pt0XSEzLDYLl1H3BbrhSUZ1Ql62RTna5+cyZ/7WvCVU6aAbmzQcFTG+ijFXyK7mN3KUZBqmWtVVhjBe0yjMEQ/DUjbY5sbpl4XyeQej66Ep78cv2kMGdoChDugDXobEx+vC+SG0sRjHR22fDmbm04QkKAAdYg03FbLoDXOjoGcxIomFHkaYM50rc+AUmU7mXp0C9f6LAZ9jHM701cBEjR4PTMaSoay8EbrU3Jkcw03T6VQjQjhX6HICZV+g2wUTuHD4QtrpEUoBJAmWHLrLvV4sevKOkc75Kh0pkX0Eo1s5m10MX2xa/CLB/7l2P2f39nb6P7K82986l+evO9yREc4MQlzVNFI53g2OtRjQOpyNDkglwgDCcAgueVWV7cSzv68PAmNH9sOjFaO4IIPuawAaQe/OQwCImdhAOA1xUjuIMeqsyZSJpTAk/EkilYVXaFS8JBFQBWPQdefn+K4Nc9pmQEEy/uGL1u7fMUg3PPlrBUBkkaMLKanTsj8sCufdppGpJ0vg9cIGBviE+cZxbWd9dTsPKdXfnVZD1bFvGJ25ZUv0J1Z3H1cPWOrQ2EQX+xplR8yHV1/BmRHamua9IXK6N/dso7S4E0pFC/OGQ94L/LXD96Zip4vOnknj+9ct/6sOxjHe8u2BLUpJbewMzE5z2vIT5Qn0h56+/7bEN8kYbhDUAvXHheQllqlUDgqBe/t0JHgiUy3ByOARBj0NmLwXp08H2mMMEFmcXzrN9DXqNYPpbIB5sVXX517VdPscWPb/waZx70CWbtZH5h9KWLVPvzqvL42P//qLzNvHC7r1Kdm5+JH51+5dw1mniosD8/S7dZdlFWzfIijoEYpgns1Y7HUB74+dmDsyQNTGkKZjPm6e6xOW0IOHEjqMZR4DLyUTNJWEcZxus9X1PuyXJFDLrxrrkqZaiX2KaZJ/XJdyJkptbYsek3WUMjHFJExKvvAVMrKcI7UhyeM/tnPHNRFP7Rx9u069jreE7yDz5eqgNIx+OgmqcrNL84SPJpeNSD9B+fo8q898fLmV+fmkAMgZWH+zLzhDyzfuDRC5T3h+DSDbFD+oq9i5YBo8CKK/rZvEUkH32xGwD7meOQftAdWfNTc3NIkNbVPWHGB7cGpJ7gh5gtyEUyz5/nuE+IY74s1fZ/QwH2XUyhrEOezwQe549hhwD7+GHOAnRtA8ri+dW2gwm1PHpFgohHVQxfHU0/xhJNixOTxLCvgTWy2lBzpY5Zs/VWWm6aymwRiFVEkklFkUOQ+ges5c6tUigSQGgtOkTIk/zpknes7vjVXugvhqgLkSXP44k/ejHnzHNVaGYlepDs8NKaS4WUJ9Oq3Ncj/AQIJF/Npf+9m16imp08oZeB/nBbhlGxDQGRve39mgIHsqBud3uMaFn6YeE95iFW+2ulMg8/a1vjQPpL79rHzRAwZqXxODO152pn7vZlz9jNseyKVfWJWEfmJRqyblUtKEeKvBDvw8ONzmK+xQCqgRNsNJJT/wHd/l43/xc0s1Cl1EQaN0UtyZ95tSmPL0yk9NiD5KceTSvQGH+6i6qDghrNOSVMckcKO2L5UIYfTCLInE/CRYuNgkSWxGziggG1jv5lCZvncj0TIR0WR98icURd1okXCq0+bCh5xru0NFMpAjsavUI1AkewbRXU+NUc9966NBtbOFxmcb+slRT4WtH7ZJ9FsHmZimvvNkwd+qIvh/FcsEOHJs5zxyq8fOPDCfASyukb6T/Kt11uXgZxbNUkbNzJ7OGk7xijDXOM2To5VEmnG3LZq/vjd9LmP5TKevO1zm71rxJahYRtuT+qK99EbvPext3EuE0Dmafk8NU90H7NSaF1D4eX0CAGp2Zk3h3fulMmxZ0LOs+e0A0q3hz7rNRryHeVvoQcw+Lptcn0ZTyo3KLj9hAtBdvvTyHhjABnOr55jdG5d19u57oIX+WL2G6aM/wdG+Y+XrQ3L198kpPvKmiqQ4WnBeE3rdhLftXXrVoSRtm8go886YuXWatocXMP8Pspfn11uWbfc+I5GUK446/ZxkNTkP+7wGq8/IrnhxnFC+Elyv/asFnSd+dJDo8IHSEtgT3grJbRRRewagsDKKx4kukOhMWQ96lxOazha9n9Ukpz9ataQUyTvT7WgQPKiOauzWtt+3J5/VGytZ87y29+xuNGCz3lC2p+ZawJk6HhByh1q3TLtfFETrwbmRRbWxme6hkr+wocOuuXrB0kiI3cxSqiKyVqucz3dWKtegkFv2Zu+CeOWPVFojssBS78711GpW3o9hyySR6oJucGfFIEcCpTEPPV+yTvundcHP8TMjxR6Mk+Yv48RMrbN5YGsfYTfvbsmm9Tbv8WwNlDPnxQX15pvVZT05aMbzUZnmNGFK6HjXBUir29ap+KZ5kjqLauCCxEte0ur5jXoYIgo4aL6NdyJwFmhyCk0kCtugYtjc2ykmP2egQxdLxqQzulbBAbSX3r0dc+cyXE1vDENz+2Jps72h3kajtrOp2Xl0wb70/lTZSDpxvtwg1/EV1tKoQwkh/HNAxk07ITz3vByyC8CFfiGlw4F+HrbN6fIoJ+ojiVLNW9PK074epF7io7C/DhSYfS44mXg215Kzyri8UXn0FBrFzKezlGk9geYViEkr18EkC85x1V4WKCyocGQRDFi6aysrgFvYejeDNSHQplQ/EcUyD+1rowFJEZxNhfZALV/XXES8/lBro/Yc8jSbzacgs3HwnkhNzzmcKW4BPmM8T+4ax/iri7WT4HEB7iPrE78kSIPzwhZ/QRJp15YPoNbOjfcbECarigyQENW3w/O0ezpZHEjqIBq5kv0IhMWV8kR4hBcgs0tf4sMfLsIpEg4GBH+nTn4/d9eukaBvM5Ulktmjf9RuIh+6CrwT0IGXKoNNHBCUBXIOPmksKIKZJy6h7wv7z/Gc/rsv5oj3v/XyX3EUDNnhsj//Pfo5sQT4R4B8oNKcwYkiyMvyVylS6QLGTNwM552ZYpcavLr0LsUeUIS5A8R/w1I4UNAZja1XqMcC34K++JzdkJIobIIiAT6GgNpyytRuy+z+ihDB9C7QJ6Y9H4F8scGJGiU058VSOduhjAY+Pf+Ih050cW+LL+XCJB5VnJJI7CYxJVtfRfIt59szWO+0wuOnnApMSJtxKm+4V2UL4w1MmMJdKaZKuE1pk4zV9mKagnMbEwvvQMusP8GE6wQsUOD2qhezBgRnVrBmOp8iZ8KpHHn9Ik/i+Qqo+J4niKJ+GbvKgHptAxGPbyL44lImPo4/c5CKSqyGVy+g/qdBD6WPgrWDhNAXgOQEPNNk6D3oJolyaUEJAo108i7QJ6A5BUZUJwC+R7iTkrGKQgkv3WBYRbd6n8rhN27Fu4EOski9WdAEgM0O/vjsmnovXOvzo3q4vwu23oikg9ETrIgaucrGKIKV7ho7gRVKZBIL+PKiO7987ycBrzLMmlB3Lh5/ieuAa9z9lyUe95F8u0nF6KO7o0eb4Llay9IH/9UACD1DMAJTJz5p83p6dc34NKABOPkMl7ol9FYY2k/fWFlZFvdu3PrW0olfZ7fHzkbjWBxMwmQmvcyslTVOqRTq1IrlObeBkNvxr+a0txK6Oop6TEDM0/K8My+vPh2ILwOm1vBtuGQj/+qzYuTi+0OdcWtnAE3SltwQ8Y9q1mk6QCLxgVzA8tXqoW2lPVcTrJjkjOupWfto/KMD+avGNTwllX6k1FFzq+7th+RcuBayTvuBcgP4bZ8MgL5sgKJFDszwEqCNLeX7jZum8mWv4VEalLn4skrFmWzRPVt5xQ+r3yz/dEUgFKD/pU3rLDKh6u7IhZYFRawbsablmMll/X+xdy8dRVNKLwUTP4fwrPedWCNg7qHJ1BUmbSp4ESZBFy7MkJzQ6hRKGyGdGaceq3HgKwaFhxP1V+t0VelkNASiqicYpM/yqLUWEbRhRwQId95IT/A+CkziXmjd6H9hYGU87FLNrjCaEF9ffVFte/Zw/hS3hxttOgMcH7Iebu2J+0tW9dYfZrJlf3vV8paY7Pv63jH5EiIK3lvGwXStAtzX8vKKDbHZuChWPDcm9gVVpwPXfw7NB762Y8GkJSoMpSo3fw5ms+uofJdl3vHFT+AZ2WEuUY18YVP4NrZNKp/lRLGa6EAo6K9UTdKy+V7Irgomfmh38tbgTQ7itWjNdui5FyMimHS4XYzfus/RXGFyiAB04ScxZLM4yvWrfUZashpo1g9BQ+IEDQTP/NqicVWshAyALSDmlMkOx4PfvpTO0qxigJDpcnjnlVOZ69yTJpqOfxJ+0o2jbgV2qqaN/oofgxu5eY/xe4Bx7GIqSYddSMqNAOkGRJn/3oJKmkj2QROufuHPsDsGw0l6I6g0FlqWt7FcUQc4I8+MPbk1y/rC+aA0nXWFw+M3Y9wsuazDNff25G5pQe/o6uVX7E1n3pDzTLiI536YyAEccva4n1zHEPnhT+s1+Ftms+nF817KrSLW1fmg79eCgpt+GFps3li4em1Qc64abea01etqZ/f0usUSDhe0+18+Utf1f40i++fZCU0U38H/xIUsF7qC68AyVqJHbW7v5CD7xuhskQ0ghnf1ApFnnoHB/FO79tcc5LTfqVEL398wEX+zfnuGzmPTrvoDRTwYnx8PKHNbtgkO4GolfRnchJBAzemk3L+jPyTXNw+QXdk36z/+KRu529OkBQoMsXuZl8MymibFb1sRBnniCC242F8/Kl92I47SWVSTeh64hHnT07pxyRX7f7PDTABLKmjXlQtGcVd0lQEZwy5Hdw4qrhKRf+L19TOHxGkUI2raBCk4827Kq8v+D/bmWDzLXw451/e2wzI9zAZ2iz92uJTKzVllFCEp3cdewTkrFngioDzz/VFf7rQiViUHAW+fj2ATNM0SeoDflUdP/CFZCpN+z16AQ7LsosAm7zaJ9IEWfsQZRP5v2wKpOMjMw7dAbC95UpMp3p/FH2W0NeTqfpA8HZaLNXrh9fTbp2UElUTD8DXfBlXc4rrRtsWMM8tqaNeSf1iaik3FY/XUT0rMOxO6/kYXa5Dqegl7rAOcRa4OfYxeuckLGRlJTuQ/N+by/w3TcyG5HSPCw2ZDBoLVEbAUqm88WIJFEThf8+/grr6ZzXPrMCZ1K77Lj//zhRx/4OSARFK/b5PnX8T4vmHzk7eYXHsst7QdQH8z+uTY+N8JhcfI5akGr+7zhviPjyOq3v7gmy8O7pjoamVqnPJqRNFILGrnGgo5rR9mHDUDdW2CTAhkgob7sSvuuzBOeiCVFMr98PvQlMtWZM39HqwIB+o05axy8+/EYeWWGmdI/xy1q3tP1I2FJfCtJpM8gbi+XtIC0M+LnB43JDkiSDHSRGXZGnusR7jMqq8Dr0WBZ9+u7dQaPrkUmof7ev8mfiodVDOY7Q8otMRZFxs3BOc6VaMpIj9IBvfnvFOw6veS6vOBQk2OYdN1DW7dl6EDXNbzx9NEZ/hIo6HxkLNMO2o8N43d8YawYa93YnuRLFTz7PzILxDhKfsjE8nUbaP8Na0VSn92rV1K3b4Hab3uOjvbl23FduKiArhtbYt7t+T46NmiM/roo1dcauLBFWfyZNK1NEdxwXxsOhkr5I9fjq/CXkiZcFZ2bCCRzmQLBpCLMGJOVR7g+ft10NAWSb4NE8WAWca4he1iVonNIHwxQE/qLcUyG0p7yjlZYeD2WzCTacRgxNMVOHv68mQw8kM9OAm3sVdO3UiuUt256f9Dt/ZzYe/N5WAQnd96kjw7zl2SdF98Vz6nBIJKrvbNsID/nNwddjjdSyf05SJUQgga6jmPvpy16icWh9kUBwEbyo7rLejqcuShGSF3MbYo715Ktqv1OdxBabVhxApC06S5MlKN70NO9wq8DTOZSvwNfmbc/dUghQ6Morp4utPil4mzbVhtmuYo6gwfjM+OIQ4lQALEu4LcRKUbjUiwAiHgqbH8SKqzUCGgNU22RMISLz9dwykDxfV7+KTRUCscqbKdPPgB8EheuMMFbcjL/iATvUgFtUf6lGh6sw6kgBWvrNEoqA5YIT9xgKkE/iYX8IvmUcRdSBGnPAX6VF8FkstF3fL+2ujYRAXcNuAGtw8agLPs7Z3Mm4EMar7RY+jlDEy8wUkvwaMikhC3gE77H0s5KXFVJTYCVkfYoSWUdjv4BwGdbo9cKJ5qY6g2hikDFaNN/YedLrbeB9I05+jQBKG9b10mQ654AXIQMB8x6HDJDIkghDZrq+qgkpC7Ey7imN414QcJoUL/L+b2eI1IoATVwz4BMg0vt8x8WweyNDNMcRRBCAFkD4sizeDPz09bEBeVI6WDZyiEyNM9zBHYGuGOtLRE9eKWVlSwEybR/IHmNFznh1214RNa6ypkmC7ciqsmPNB88QBdEAr2KD9fE+QCOeH+gISmoxgww7o8JEDsgv9GQZSKdIHBpJuAO7rqRtwUrffxkAiIA8iZF2EvnPe4ZimvVV/20wX7+nJwxUPf935PhDs0KSjXwKNx5tPAEh+XqZWNKc2PNNjQGrAEcgcQYEEpJhV+gOnjnEF0oe4ApcUZmoOZknjG6bAgSOdGJ1eypS1SpKW5u7J4RBnXkPyje2gvUJvXANNLYsQD0e2dTEgMWeCIqnNFx3F02EkRqwGZtRBGlFaT7IPxGnQ3KUUyQQCIPeIJDNBfbYbb3teI9Hch/6ZgFyND/EWx8rRli4YRWKcXI0SvS8qyajvUzt3DBDsnsRA2RfDPd3K7As+wDUWp/SNRwAkdiczkG4YZAY2XadWB8LG0iG7PIZn5OOeKLwcLhY8h6rBvce0R/+GEE0T1AUEas5oiMVXpk+juusL8bqvKSL5x9KBChgjmMZDZniZU8aieaIZJ7lOtnqc8j/B8HYRsgc1CjPI9WgPEBqnlulOGr/t5wyk9SRTJAMZPkM0+hl0gQDpsJz9AFQc2YdT0pmqqUmtKkCv7U4AUYgc7Dgqy4MSU1lVT8OTZwrHAp7l3OQyhILx3BwFEvvNf9nLQKKaQZZyhFdTigRL0fkQ73GWqm+M0i1V9hAGRp7ZIvA47aXvvH8OnZz18evekesVUakLOWXgZ0pUN4BZxxzVXyze/XkPKCkmBx8DjA+A/8FY8mIU2aFb5QO9fn8vlldj9MHYyLoSliFT6+iX3RAEqSkAqRSpmwz7iIn9anAKJMsGjzow9PgQM5EHXcnUYUEv8W3IMpjj8u3ioHUXQDBUMiXqmlwvMoTodbamNrUqkNBgbAkZRdaKQCYMZEfKbJ00q+NW72rI9aum7h1HcJpcJaPOk5rGTCsPPvSxmJv9krlX5+G8YUCWwwTM/h6GZK+BMGnL5FyB4bnblkm+fwp4HQAJzwN1KWkFyCMohGBYjrJOSVnU9rLsAyOwLMjMRcprSJEihYaVfTa14rJrbQCzqsHBdoNFLqp6Ebh/OVsEa0GIhHF1xQi9pzIXo1MrUeQKIlEsxjjK6wjo8NkykJS8UiQYeQZyr1GkxBe0KOtOp4DgQOHXj0ocIQMSJCIeOkGYVuS+d86slAT03FDx1IplJaojVsGmGe+24YOWbFeX3CURFQRuGwdkJV4MyAmJ3ifBEp0wMUNCED6yCgzLkMbzlshFRYoEkChWt9sZRQIbD1i2gQoQ9pYY4jyQnoC/4sDYA5/rcwzp+olkapri3PR5Q5J50ZnuCczyXjOGj/JkASWdX5Yexmh8rgSkBxVmFOlU3HW2RrKYYeNK+zgwhfcPYwA30HT/xEFtI+px6+Pr4KwK/wBfsCmd9j/mClgNhJDbWP+xIk2+HEKOg/+E7LND97W/EF0xw2LMDkhyswvqBMGidz++BrQ28uANkumjjIClqUyRZvEL+CcCKR2K+B3C7XQw7+sKKvuH6kjf7QMo28amKNHufcyB1jHU9QdZf9RvMtPRnnNVSYdouwakrZHycaNIwQen9NZyFLmNodWHTdvQNXF0De7cVeI+kH4KgwSoxZu3HCvLYaHscSUj92lGk+qmpQoMsdVdmKNJ4OZz5Py0KIzwM5b8uveLypGIUDVgVkbI2gDSR5EL4v0wMiknmpoaUyRrS+hpA1IoWBgI1oOfnE67IpDdD6XJ5Dgpa0nr6P25acoxe0AoIXtsW/2u2jD3egbkaqZxTzeTvQByJk+Rxg8bRUL84FBrphDwvHBsd8ZLBhmMy9Lp2qqppHA2RtgfJ7hwku66cnDd0R3FUOy8DpupcWe8ZhiSmS7PcK45i8RjRhRNATr64+LcYGpzC+nTPMQOd91za2rAwHkAq7EVnYRnQyDjUWRGIIF3lSIdUBTViwFZCpLW7zdaEBhFBHFgjmxBsKI6qQ8s5Ep9H0aAWYB3J0P+HIvVDSAnexgyjtmc9lemVu8Dv28UCYEWc0KBIq8unM8oMOD2I1DDMyuliRZG8zUH8dlmHTUWwgL5J61v3iHlTMzIZRdYW/iH54urZIjdCx/ZlzC12TZ2aFsXA3KVBnSDdhVojCLMXC1o3B8A6QGDnlFsqUKRzuT6BkAqq+HPoQeLRquEpZRuknme9TTPnk/84vMUSW+zfQmatFGyc27UcKLcB0SR7ePCpbU/dHRNR1qgSBNNMyAJH+YFTEXHQgyvIoWECZee72a21YAEUpyOO7gHvC6RnZGpguS14mZeTDCu5OfP4yUo2j8zX4A5ZBvq6DIWTRd6fxFzJBZJRrIXQIroCCA5LZWR2TaOzMKXShS5J3QuX4eAlRUg7dg4zIQjxguaCVd45nPE0MLFH468h02/OLTjdFQlRCBJjh+RV5ak0wFA5tbIEFasWN+XB9L59lEYSHIU6WTVHKr4eA2TtRydklPuh0gXr1P4QFPGeXOkc/sbemOE4P/ekMTsWIyT7dv/c4bk7J8zID9ClzO3ff3rX7/t67d98cumbV0wOSor1ahgUNABVznrzYCcIbDHQZGuOUVO3fcAHTH9eE8zIJ3nyaptYqbXlw+qOBiCi2aq0MVAFi14FJXsmaCrrAI5egSKYNYMEiOEqLE5ijz6xQceODBGkoYBGTpXXEiT99dCgSI7R6sUCcsW8WNuxPggU36K1lx0OAFNgmpAAOqkTEjPVXcod6Fxp6zYs+RZ2PwvetOCmJk/9Oy8JjxhttDmCYKeRmZLPxtUP5UBuQRiNxQ7TKZNKRKmZDK8zzSbWiFvYyY8NT1cXCe6Jgg/oLYkgbyP+UGV3nmnuU2w17NOYY0BSTQuup5tyVdxL7dGJnU4b1xsQE49/qkv3FFP6rcilI9RpEZWHiq2CnF5ZyDvonWupKMDw9IxazocFx3pLoZiZ08ZRvF3bdtmVIcoAsWu992GJH0gFGQdy487MSPQzZ3o9HRnxC2l/ipghv6dBgrI9AtQZB3p502BFAPI5Nn10qnnJ7OiIXgPcXbGA0g2QxVV5sPQJQTQz5AB2cuRqw/iZj+ANIqMldHFeKMiOzV5S48zIBMFElbSonM03T3Msdk5ql7Fj24ITCskata0RUrraGjDFzms7eOG5Gu+4rPZ/T1FkuZmKc3kU0vG9C4igXh/xkPC8NAERn0CBtW5HEV6Rdf75hT5zU9/4Yu33dpsjUSCbejBemFJ8m41aAJt63wQ3IWvMZDGsSI50vYk/SASoUADspvwmPak9OnxXRP5NfL5T336C7fdPpABOTnBuljBRSnSAcjy1Ooczkd/JMhZRNM5IKPwv+ffs+iPBBuTyh9LxD+gUQq+/R8iMCZqmuRKlncjv5dckfot2U7MRXAMoXaG0GS6nWdR+FoUp9Z2ZC7MtYZA5/e75kCytTYhpVr55BgACTulnF0mzI4ljXjNbnebhALlzIMjUaPfQfXzTJE9mfgROOy7AXnPhzlcNy9iJYpMbGo18meVTkcqiiSjnFn1FP7IHJgbncweVghOQmahm/PuwN2GlZK/hSKAqGumyz97M342BPLbCwPpncXURPDM0Mn8WmWNRGZzilTGwDWmSPNhNNnMcln7IFZ+/PJeKLIwcMnKObN+3ZYtYMqmpTGdD80EcTEZOoWc5ZgijxiQ0+g9FGTMDiCTKubtkdU1kjKp/Tu2rF+/ns3Q+ZBH2pv7IUyWNvf8/r3Qo+ew8y6nAc9hhYgthTNbYAbeP5dJJyaeVhK29PjF2B2OqTklgeIxzpN+57M18hksnMhciCL3yN4b35QiwY9CAClOrcM6akSrbkBmSY4ckMid2XE67aMzPrBW+Kt/VyfhQmTKnByJ5DMgKbAsj9IKRQLeQmkwIqCs8dK52U61ON//Ec+BXmlHhZIPAl1fjMumyxYohZha1cpqjDVLEouu6PKIMfPXXVm6IFLsYkA6FNf24bqc9BdG80AuVa/CCZ2EmsuRYBSaUyQG5tVQCcgjljsMWZBtR7uZOkIDIHELXrPplE4LeGrGe6Gs3YmuB8/35HSt2l0mR56Ssgk5T5HRAaXASTo8mcCpt3yk9n61HIpuVVPkZa8Bul5LrB7JogYvZneRiu2LTgB/geoMtvE5dtezFJ1q31h4akWZ3mukd5z0N5IZOsT97VFoCWRq8oZ9I12ry8nx4rOTr7CYxBooevuDTrIotgokxD32L67buY8AEmYPqAEepMHnSxRZ82L0dwZk+4Q0Dt8zisQwUusHvqr1ThMqKGWd76M5/vNageI3eWWZj45034M+wBuOKCTPuxp7C0kZGcWBanZNx9YgWMcyoxW8D4xtXVBpLgDIqeMJyTK7M8JxQS12YSRvDfCNdK0W+7MJkBDgK6xFGAGRcdtAkdt9rbJGssXk8ssvP3/XrlErsQtA1gDfJPvWCUUakGbpNCDDsPrBOqNIrpHZI+O+CDJh33s+pV1XqhuQBVnNyQG+EnkDrlLearzS9pGbiG9A+rb1epqsTVW6s+SVfpTj4YkOfZ0FrrWgPnsW3sQm1uAgzbrOMQJROc2mO6pi2G3rm1vA+uEgAXvfGMgqRWKNVJbCCdtTBlIH0xHvsATDcEUAwJb84LQHgxR9a9qN2ekAkGbOMHukxz/TpTXSn5M/bdgxkG2jCdwGnUzG3iDTMGY2xdlWAhMOsgFx+gsSkMeShndlfMLHJDCkfdhhURS1uUYQZROnL22zVeNZ0xS6Lg/iHAeTYfKVWlitfAGS36jL37kSwd9bbNdGFInp7MzzQhMgWZAsAVkDkENcPgGZNgISGGCuhC45VoKYm2m6A2RRB3mrSpFdn+s1ilyW8vfxsrlDhk2igMzxmuRECTFLRoT4DXKykMlgOoJBxrOeOUc5zf3g/HFfcW80IJ+e/3ERZuceNooEIC8WbVYuoOhFz41wJ/96jZii3RIACfeoiBmffJKS+QqAYsgXgayukfSVL9/lmgFZoUjkGZDD0OY2BJJcnGtBSFMqAcly2jsgomwn3jpSApKcyX7VoxQpelUA6l0wIGurBCz0NJolJ9bNSLnMqFuARw8fgMxAbJW7OdOUGp2SoatkPERIVp1aYdk09bi5P+uUbRFELXwIi/nR2/zlml8IyPrFQQrrxtRa893ArJchYzqZ8dw+dazQjeEAMq2uka7rqb0hNAGyukaqb7NTIAFSCcjgnBtJLvbOe6pgKiuqAgm1qEgvFYpUX+cZbxRpJ5sYkPowVBmegQSc1KqDWvSIcUJIFtgTZOVtkP2nXEw6Q+e9c7PfKEWDFg0fZbtwsxj/q8dC/KXHAt+9VtwraWV43xzIZXEDWegAu4FOQe9wk1nSOigMBzdLwpi37eplICsU6Wm3HS8AzbnWoo7Kv489vQDkqEj74I+nDUgXWD3YH9Rrli36Ho5G8GI18dHjreIa6QI8VV3moCw7BvK6VrhtsQuh7Fp3u3rZOexuLXu3rr9a1WW2Gl7HmRY5qRx3wzkCkhbJkAdShgE2yrlrYyRXSwDS5Eh80rR1pgk0P/fmQC5JaZzyiFxCAPa5WhjWYQoiZRtQTdy0ccy5C7yYDkSu1YFoVEWHtClVtXYoAelCFUj1YwNn5drgTevi1Gqd4nGSmWh5nQjw+wA7KDKIRH/Y0Z3S1Iq6A/fDzijSYyjKpgejSDRVjnIDnZ46cTHkLHEWVI3gYQMydFSsisiF/KHTniX37+aEQKthCYcckR82GTSiSA1xdrMFhrUHHo4M1UJAduD82RAwalJMqS6ICZjX/tUpiNPBtVtd9im7/c5j/ZEi0Yu1HJAjJN4HMT1VxY/qGkm8BdsjAQ2xx0GBdCGnJFmdkjoHLfeohPjgQsHKqgIMg4IRtSMDEso7A7LmRnQ/lwHpvBwsuV02LH2pvj247gRMK4qTDXq9RmYgC5sBNfmw1BZOXJulpHT6Q/CELdIaQe1l14gisQQiKCRLqgWkrzG2dQEgu+mkVfAA6Hpo42jsJeJDIT5X0wFAcrOSx3qwDH6MzLw1XSNdXPzggu39skQsYLhdpUhwrSU9Crp3BjR2sp79iA1g0yZPy6a9Z0MQIM/BtMBAptPBORSSYIUXII0iZ5BFA4eGI7b3cQPpBwOTB7LG1u7k2V76UteF9Zke8FNYhG33rJ2xnKnZOFpnwU1KPeks8Z6CrxrxZDFZsPEOTiNwVLfERKhMKVq5RFngaghePBEW9Gs9ssaJ5hH+rVTlYTl3E+fr4geA1P0Qt65dMXgjzgAEW6AbXUAXqgTpuipFd9rCua9AfaxpKAVuYQkALN4mEJJS5LR5J8t8+owA6/AQy3Z+KYmWEJWp3wdAmgUgVXt7xkTyDeAnVOzdMmFxRfzAyu/wHh9+uXn5+iuTBNsztoFJ1zUHt4a8EZXMb0WlC5xcqzIe+05xn8eNubqW/slBKgTF2V0TP2DdcAHcceXEM/VEUEpuDiRRWi/9+EDKlh5oces4i8/XyHUgOcILrIvOdqRNrrOXlHegw0e9g5c/b0KnXcI3pWJMckFW2kfNYTzgMSBf1k8tSyiT8MMownSuon3QJgbo4WaCC/w/QMFMSPPlsQEQXTemXaogPQQrCj3CM8d3afv0R6lde3XH8rM9NS+gPUNPM2FDfAnQu8ed6VQqWAHomWUCAZDG+bBbYtUJSs//0NjyzgzDUJzm93KApkBRCiRg9tltPSBmCG1kyP/g8XJ158nxhdZI9Fz6zZ1oeB1TEKbpq1OcxTp4ZUruH/Fjp+oJgYQZzhzLxRA4O+Ub9R/W2VNLHF/OGsftnT0WI6vrbDx1ZEcoAhlIxTt52dYL0wRH4urHLlvr49TbdTXdPy841nxxgIDH+sIG3hvPLNJhQLzyKnz7sc0hrL+T64JE/14cOrke6Q19jkQp/LqUa44yoELH6c+caGLHycFUenKLtuDClD23K/qV6/JyhUVi6feFOL12IoG6aMvkuVfcuMCgZsHuPEuOnIfxfk3FqxyawMW1ra7zqjrDk6TJc/J5R74fKbLq8BpWIALtK1eX01t8ACXhMiE3ttM1P8F/yWE1IdptpS3yB0fHEIWXg3g8VE9SIvOjoDT/Ae7kY/d6O1i/LlZMB+9FHjE/vLgNTkb1u7ASnrUDM/9FdT0ttG1UKpMwjvUhvww2EzxMQDKxHu1ZMsEV4a0LHsEg1PXMs+cXNbyfEZIb9R8YZB+KkIVipLHK8Y8CzMuZDAUvHI1JqEqe2ZxdJdRkAX3ZsXjwIwmwU46KvWgAXhe6r5ygZqd1PnRV7QNnPFhnD6ZvYvd73E59VQJwj93aI1taJ6fGYPDCikMhd8YQVodyHlUgkUmd3u8jkKuRU3Hhoi+d9iCKOnQpfmOqw2Mzxiyeno5N0qVzolodxzrbNoqS7w7s3CA7HydR+mEIMajM5OTY5Djl9Us9xsaTR9DQB9lPYAmKUD1ECG0XpmhVem9PAJB0JxEgN8pjPy2HMftL3g3QxdzXrettK8EQvROAU4hWkteCAXm8B3c0iNcnVOvjMQjmykwNBsLTUTOPt5pasTrPuvHA5OST/7jZASEGzW244oGxsfsv78Nv1cv5ro8eoLzLqMWeI1/t3Ll1kOJHde+if/T/nYNbPLeva3DrTrrcmrV6JW7Tn94ykH79p2+///M7RJhduVXeMyC7d9L1Du/wUXqb0mBfGNw6ODi4WfVqHlGxuLgtoROP7MQf/kHzPu4MDm4dcPFgwZ72XfgIfQZlIPDVHeNjT9wAEUxeH+zhfKoJ0g6rqIDBngCWEHS+avTt4E7/nccn5a9r5qILchDOZf6umlQdPpFKrsgRCs8DGZwZTxjh0Cx0K9j4znVbt67ttYCQgb7TSTuilsvuUzsjzK2gQGDoPbr2YnULEkjTBf4fr+vj1PV6HFlOaSifySePAQsHG7UEB7xUDhWFa1RETbbxAELP3/ReisE9O6wOb+AH+gmVcgBdkh3IhSI4X1qVdaxuG9HHNVlYuJddoQmgPmVlLXXNSvRH1Is/u2w2usEpZWPjqwYzxfGUuvcDIO1XvLLP+RyQr+GZBTjXWHftnVh1QKRPlOMHcm+ysxuPEPpTGijI8IyyXgqklNegfCfo808xd4ZCO5CPLMfJZ2Xh6Rh90jM6wUV3naKHEbeOe8FuOXxa5iBrmu0c4u9RyoVsiuH9CjZjLF/c9faoHRfx10sxruFQDudV2Y1lk/HsLwY0VuVp/PTcxTzqlkYxI1g1fEDoyWiy5O5omnQO4J+CCmcF6zIn9Sw45SgkANTAt1+gKe1f63LXEMP4gEURKPQ/iFi+UV0dkC8oZ6VqUVZHuUB/ZjdcFlhZiFXaWon8rA0wHd0LdtBZPu23Ba4IJCIK3tLHi8qX52XjHAqxeK3zv+JVKJzxAqMs6ycHF4DskmsDfTnT837fKtXUkU4xCto6TvkRiXv2mNKnUpHi6opjg2dcg0l7LjQO6BHhE+HOFyeW4LISZZZwhioKwZXXD4n85Pg5RcaKwAKlIXezmgQnOAps+HbQD8sbGWUoPP2UmYf6kyJYoKSyNm927lefv/z8K743r9YvKQVAylnZ939q16dufHFOCJINEmer0+Xhvlz/dG74VuadQJHXFqLIarjkSiwm6UlnAzbEfrac8tonE2kw6uCcUHrapvToPmzUaUBZzcVIUaS50t8SVKJ6u/CvzeRSU/ynxIjq+ibnFbc93OgsFfUcGAp5ie5p5DFYc/jD2Ly+RmngJDvPnu7M6t2feZRsDrBzj+TG+clyMrqOjb3NmB2fW6asGaV/KoHKraez6ahkKysAbnml79inDVDQcJ7csFAVIfcuA0hQ88URZ8u8oyRfCZpRDOJuDdeifAE4W2StHfurW+M8HOnKoap9OPNF63qKLaBRkeJ+5bbh2bm4q2NOp9k/rAlseDSMf5uriAbKso1A7+wRII3p/Z1+9S180daCJjeap2uZDym/AKkEDGlhvJ3xlEGicXZuCSFONm0XRhKzAJLbMUYlKFrVq0MkHAPS1d7J5Jtkubf0qqvetQvvFvmE977Jfb8waN7xn6bpE/OUin4zDlRE6XVd1s23fOVVszmw5v96C0fJUMbZbfin+dxsOf/HzUytAd/S9FsrIhBF5tO33+GzXBp3wDv96olOC/VROHUXpYFQ8kHsRO7OEvfmSXn41Kux71/99aXeeEOW6LsufMH2P74yA/2/Z35qV0zn5arUYblcgX/tA5f/L3vX0tNEFIX7ge7PqURdUkCNu7bU4NIEVAxuUAwmrHyFmLjBBIMJK2MgIDtdqFs0oYJLVmVpCDKXn8B/see+huk8WhYFIvOlNOlt770tZ86d8z6n1fEQqVwFtJkpH2ivbceCSVtgKqc3iXXv/dbB4eGh2pivaGuZE8UYDNSmV+XNw/3lqX4I6VtaVCCtkwToDF34ZxaZtGaWP2qZIKMUGfUdR3hguDY8ak1mcOq9VXdQHKyN1oYHuAC3aHJrHuboVZLCNnSWTrYzDWsA5MTRpE8zLPv4WdD1mCwp3VEe6uYhRRERgrmlfs/JSIz/L8h49ePHMcdTiYWITtpjgS9QYoMd3AzWpky/Q2iVi+l6XtFNAvjaqxyZKLQFiJCV68bs6cLFMWZ/hCfNgjWNUMfSmK+zkCMTUdMFUYcaFpGfxH4SMPKWOaRHpEdPdJ8UeqUJkaDb33JkIpsnoK1L2eChfkeGvnrZCEfhSlyIGJTc0DHBXKzmyEQhDu18ba8G+26Ylz9ahR8zf3QSBDO3VWbpWIoG8r7obYCsWxW3kxaNQ7L316TxzFyXivfG3dKBIgzOFYoug4nZ81wGYO+RD7dNrdM3+xWbS22nZV8lOSG7jM5bkBunLF9Rk7qVhdplLeEWBzh1Rq4cniC4t2rje1iQdYsE6XSiH2BJNjUpNbXZF5TBj7anJA9Wu2wfP/cA99WX5yVSIwytSNQjLj0Z02bW4uJ+WYItdSW24tPfPytMKfzoFhy6u7D6OZdgugwU15RqmruHS8I/cNENcUK+3vn6sgSmCfVBZ7vdkTanaq8CohRrrlARg7XZT0odzOWE7DIg+c+BatTfTVV9BFkcoJ5xFSxVQFeDbeYJSS/BuNp/lCbtQJ56atMrmyqQZNWckF0Gu7LTqrExXw0t3y2Arl4kFY37gr/lHmmfRze21BeKfZgFerB4a2Gzuaxgl3NCdhk6Fd8lmdTnR0vmZpmkEl5Yk7SSZiL0s4vSd7N3Ldgrx4luyYhm0uKWckuv47R8uucHpFPxG5Yt60uPS76eO1pCtkaCRvAci431m8HOHB4EJus2jMsNwxgxOL1imXEnsMkpnQM+qjxCfvJfiV1UYFgw5Kg2BWofDAC2kZBh7DZMESof2e4Xdftz9F9CyFSsOGzYAllDHn5pX1cMxPBKAbl9ZBZFYyo78DRLiZ+6PQQl22m0ZLz5CNV5w2k9Uq6kPNPYnQiCSZ1VzN7HZZ2Slhvvf1fKHth1XXZP3u4Ypic3qAmnxchXkAHWv5bNk2wuVEXoFCWYUEMhkH6dHBtBZM4N2cjRUQYYMk8ePi+A2IUSA3zUZUfmNydlPoDZEpIgixoJXl46dwUX/rV3Lc1RXUn6nlLJs81TKoR7VyXxcq9U4mFgNiXhxkDTEQi5eU+ExUPtacsRw8NubMsRboGNEJoNMg1C6s0IDIbqVUPzqDurMZKq7tFywt0e+C+TX+a5tySBZMuLmVK3MmxRde+p+/pu5snMkw954y2A1GQQfMNgXJI8e6v3AUTVq/ZDoWNGsp5/8Zshz0Ku+uWOHF5NRcfMbuOCYurby5UrnMi+J0LJNCbPKTilsbiG1p1DzjP4k0snN5c1I38pZAGIf0Byi0azZOTljoHEP0Zv0eJvDIfcOEYrYHNh9EBazd7BAfGfbsJeuWnlaxI4FFfekTxUg62yUw5ijGDzkkzxEf9gOIEJIMqRtOUVdlvdCoCtvDCxowz7sUueKO4yQTewCzOkL4dvk0ktdE+/3BFPdgmKxrNkZVeEwgxNYyg3rn4EGWEUVY7v8W9EKFMuaXOaYClkVIgl59eHnhQdjd94Jp/R5BFUv8YsdUu+JqRHUuGk+3WYHhJfAI9H1Z8s5kf9qiRXqPsA/ysqaOov/UUqz1l/pcl2T3KRus8qfknyR3xv+I0HV+UPLdQ/VYpokuFUvI9jCVuBBpt0MjPx7TBLhqOihjIbP7NzXHEYzZrqJ16oRndPdRLjqxVylqLrJKdLHpAIGs5zMzFAZBQMvVk/WsDMtLYIHHE0i335wIqaMigG1EDVPD2OTFIglfTYte/Ep1BoYiDnn8bGRMnH5ERGDoBbUVLMkkv2sz/Vft6Cy4mhl78LAknSPcuCczOb3hvz7HT3ZMHMArKVMzLbCZgLPehjeDg3kcMn263ct0jATe95pq5eP9mO30nRGhQNXwoZu7OXi1ri/FtOMfWe5KvY/PHopU5rs71CRaDQ0Nsh97aTN7xTMBSgy9zojQ9zGbvqlHT03XliHpCZA729/F930NB7qvfUO+2Y9xoOdODhbTlpmZoOXh79sgP3YlMHurA4uvNU74FTPLjQ1Fu0Vk9xqoBPW3B+CrK9hblA0tpTOT7TyTwuDodd09stbzkfEIntfIoPcYCdpwS+dG+XJT495MxavhW+st79hi+diFIH+HI6AUS296TAvnO/WQhIKyX7/KSR2XSw5KBohtH1boqVULvl8r379775qIMZUehaqVzJc14tOE+OjFFNB8cc9rvojsDL5BtZLRXIfuf4IHyzex3orznKon/co4Jd7UAz/wYlZbW7CvRSn2H013BNZYece179ytKG59JL/LNvzdwDcztl/PxZkH6OHyGzPUjP/Bt2/sskJo/fYv/XOcvU6CYMw/nvPM4xFRtf9FiGYQw/vGaZfsUDUL7jxb55ddw2cFHEhj9Vi9Lq8xlKkkwByKY/DRhjM3KKO23WHqvkwD6vv+gitEjLI839uZxt5mrwwX9jujoczjj3GLpi43Nt2Mu3tCCQUiy2LZEGm87fd6r1fNiuEsVkDt0MXchs+s6YAjkalR8eZjGMebDdeqk65GFkZk7y3aS0zRLXitFTc/ReyY2glOc9foOmcrTH3T1fet5hV0st8fBdkgaSD4QN+5/eHC25M8aYI6xesd3TRevRHcBQ/5xWrVhPHcPP798K0jhO6KYKltIhgDR7nxmiN9ldeb6EUiLwlEyCLz9F4fKn9+8V0w71qOQUfDYesJcLvwBIFwOZtPyvMpAl7YcNIFeXQ2DRMD7Ae7fpKUbwCT+k7dUCEQ8v8pc3uCoLn+z+QIDuwbTORTfOj7nbhKY/mKH4ZicMLWi2SYsX/+yR0bFZJSSAy2GrMawKDTnMnYy5pyf8Pfqik/zv1hy6738DoUoWpIUVo6JZorJj+p5t3LizNEW0d+otJk7EH55uz2y9nbfNEdLx1YHfxzqaAHkbo58Zmy1VuvNcw2QWkHNjB03D+Ff4eadJu3NvvbVznCHzQFoG0rKT41w+87YbgYKyB3OCZPkfxVXk026fsavcdDePCBlCs7ccdgHIaJ+ZHWWhQDaVQrA4HX2GOpbALWhiIFkmcP2YzJYSD2l2AxZF0KYs+vTLl9a33no7OsmzmD2Gsu39ji9n83DUZRhId8taAXLh0AqpUniyQMa3Pk24K6z+od1AX4JVcShkVadcoyisnssHXsfYclNhrH7RLodRTXfTv0r1rqUxJID8FuXkKgXa+8wLjdIEy9ACP5NqUYdATI4CLmv6J6BUVfK03V1A9Zwv8rRa9rwEpAVTgCjt3pVCPVM5D2RwjIFsdg9hhRxkPuXDfhN26bL7nkkgzUBau8cd5xGpo2CmvdUSKss1Oi23nkSVeo68F4ENBcjq/SlLxCfnfe4r2MO7eVrgm+Kjp4YZMruhMnZLTcVG1GKxfDmBXRU+hN21Ht0nGt3NShtZswiQ6LzG5K6/kyexhS3EwMGbKigfM1NqREfm7RK2JBRWTij0FKwByBDGf9gvCGrhxDUHxzFuYlbqwxKAtG9UO2jvpBVKh79X3a8ZRo8KiUZ3wPUIkFgi3V4p2H64KEQHZCCD+UASEQN5VdRD5sgeayEoiyZdYiBNsPcZHwTvvpwoYCTOlUQ4Eu2Rq8gyeJl+SFNLzW7Esrjom85R0DiXI8l4jvySZSs4EldzOCp6II/x1KllIpm7nlnDp0fp272TR/2tMoPjCli00jbXgwvIoA9eozso3xYGElNHv86J17tzYFB9GGsOqXytftnpTQEjbY6elj1VT/jF6NTOIWXHO+/ka7ngTQeHgK4U0l8aGStAbqgWBUgjQPLdglbzRn3WvH9jaQKfFchqW0MJ7zZIOJJqQPrccAg2fxwAKYAMBOnQA2ksA2OVwJ0dw3q8GpAmHcoZbWZ8koK9k9uAYSNvn+tFU448MzwZi9bqZkz4ADI1zKex2D6dp19O8/N+zb2LOmUT21HuR4Dswn4WEARtiIklTdE2zuwo3QoW40itxOOxwZwXV2EwbBMqU3aTUci2lMoJVYUfM9Y0xez4YQEgzFV9UP3wJwDJd2v4ziBaVSSWIGQAZFQUXLAyOkX9zxRIEcS5VW7AeO/Yeq0CLsqOjvfdvUS0GgEykDJz3zI47/o5MjP+UG1PaZFeycnsxcP3TJIlAfI1d9qI7+zYdM7snUojXiLhyISUI3+/PSoCyICBLPRP5S2ATJdGxP8VbOM3kv83LHjajOWXaTUktBEglSMDBl29eM2uBwJccF0MSK3f7L0xJ9uBpLoTYE/EEKlP5U0gKVwZXSTgTYA7sVawBQR2hg2DsXjKSyQRra3DU5Y5ciNTwWb6y+cKgXBkJ29oRxoYsxu/0gKkzawZf8Y81BXX4Vhd3QEaViCTZQBmihEcME8AEq5QfhUSrZWNXv+UrIXCFWyP2uR3DCRRAM77GeZJeMlYAAR7p6iPn+2qBThyoBFsCCDXV4vMuxbKTiO0a+lewkdigJjtpsiwlVZM+94XEK2Ysr/FHKoKSpqFNJ99Pb9Fi3Ik1COBUYyHG92CEEAh1laEr6Lr+wMrG3bFkH+lXJ/yWLOuJNwoU2zDzptOcRS3zpI5MtXHzd2GxPx4Osp0Aap6dL2T0WuOvuENX1OAaZPdxEUA+QijByw/jTjDiKuMgcoAUikWrfj5aA84UpvtTNoakFk34IFE5/UJA06IgQwCVnbAPmBvYFU0DOQG1wMWIsJWmsuRA6n+SWZdBRJGqQLZo+WAmvloWUwYkBq0h9/I4WeyVqBAYo5MlwZ0+a+pdBVAIl5qYSDVwbsdk5+qN6J44p1UEfm2B+qEGCIWzXEAz6OCcp4AHbrrO8gLJQqwUWdXLbRmfwJHhs5Fj9uYI8V+nzC26YpzlQ5UQ53hLSiQiiexyp0GkCGb0Y/aCLAGQlD4QSiBOg9IOeBp5UhjmR8slB0SIBv5cIESpcPTFnJwDpCGgVRX++usPe/Fb28xNgDSmmA+R7KFWKRjDwOo2oZla4MACYslwMz6rk0Ng+345WH2x6yZq3Ek8QuQDj8H9+CqBUh4EMziotU2hgzkOwfH1RNwp1tQU0G5+eMwihiVLwoBErCaPo0AT4fB7s2q5VRY9Ma+Yfaaj8UG5ftSS90uMW8Ac+STwftTnYaBrPyO6YSxds3HYfgQc+Ql3vAhWbONlQOwDQPJox91mNlAro8+6mUaV47U3hM6R97FAbsCAVI4krIhA2nggskKkOqVZ6RsCnNwDKTBHPlzAKk2f5EYSMPqUaPWTFc/5ew5EkX2A50ji8SyFUCuAkfiBK/x0QJ+jZhFYRWNGMya2CNAGguODH3N4wblyID53/T/eRGt1RiRrSMZLtoLEICaAEkGyLxdcsJ1nQBWiqRGeLSUYnskgrIKdvTO4oAfuBaOPdfeUNL6wEslzE8txzD9qfnRIpNx09tltkdWw/zISO39yXy+pX/SYI5s6cM4TDs+5YC1Vt4Qe3YMu1dPCEemxi/ggGJ+QGPiM0HZMWRZrxLd2K/ksEaZz1tmEjuXIyHLpVtdtY2BJMvPFrwCcOEnLRDFHMlA2v4pioHMhiPCkdoaSi42wFE2SHNteIrWM6TkOZLfqweM34iIYevnSGKVb/E5Ehcmte2DjKwlAhxoqpgMPONFEK/dOQC7NQrhMwpaD4eRgq6L2hia+YWyY5VR54FaiDxYKrH5gbfPWnG3WPLFM3fzE2/GfQdiADzhBtxjAKx/ItiGB7wKlaMJoEBrJQoUSAoy7C+V2pj8qwHcgmqtFFhYLGm8bDgV731gxOknbH7+/OCVcrEGJB7lannYEBV8YwCS5y3VWtnufe5musjM4kjLl+WBtAwq5khIaygw0Fgx4+/bPp3nn0bXz1/6OByxFHMk5sjUOAQCjGd3GkAayz4SALmobAUm8MKvOVjSSRGaKoSFsNl7itmHbbA43pda1NBWedvjd4Cuj1OAsioGy8kCNChp40lLBxJaKzRIz5HqCpD7CQCkUCN8y86FPWJ+QEG0WVU6GUBaP4cjU5/cu/fAa61q4xsvWpsdLILfB2Rh8hAztjdu0vfDFzMzThqA1DiS/x+xVpqTTwbCkcy0awEk3ACsXXVRMJsjV4VXEyC3ue4/DgQNsHCkv0ElB2fAGVha9ljoXsw8j9CKgBRIcTTB34D72c48D9Fq1rvjiwJJuA/pXADzXvkvjP7QISjGXh0n22ADrDpuyGwZU87tJJPUEtg8FOovOwnD5N34KclVYkf2wYfCQKrIxh+IpcQhsMENMl1mYQjPTgrGd6p/SlbdW1S0BgmQHOneUvBzJAtPdQi8C4mzxxVJ3H8WnjLag84SxmbQ9eUGN9wfxIsYA8lzJACU6INVWPjgOdKy5Pi158hMa+tGtZkTjmS9NQEyXfqK36Kgr6JlWMf4mHzZX41fxbkfo8P/lUoeQCZaK23nI4uhxYAKkCxAFld2TKD+1oL3yYw5dQTk1I0OMBgkMOCdTszq6q4LQ/EB+FgTSu2U/tas5OR8DyvpfbRkHMGReheYuLyTdBNZmF7gSNFFWMrkpb7wAwHSMgTwgKAIeOp8gVbPXv0g44sGB4mvFUDyceBrtQb4W+n+s9qNYILYtd9C8jH1T87hSD5t1AW1bg+LWHCkYXzuOgBJSURYjSPhabmiQBpj+p5AQd3mMEvTVpyORcCTkA+aLY3wtvwbrisBMgCQze4WoQO8exAoR9LRyjiAXIT4gmTBCaDaFMRmIkoR+ALxelgY9Ul3QAHHnUeCdN4ktWGbIFaVHQ1jz4aY1oZeOhkAKU+WRWtLe0trq20aPh6kjjA3Nlc7W1ra2wuZ/kmwKfOtFSBXs4xkln3EUuTNmZFg7uqHiUMZGPiR1tbWlnYG8kxrK+vXF3jv9ggHd/uw+lHpDoK1pUliXQu3sQeL4nDREYmv1a7jRVG0fUCANgOJBcdIWqKB5tmRjGw2LD/0nn6eMMMBPOdKJ1to41EHWAStIKD4iHHZ7M6QSebIBxDg1RN8jE9dDwFI7QcGrXUxQsF7WRYSFhNUUOq/XTtticwV8YoljzXiu4NYFRgl6ATbRFnNa/XYQNagO5bOj8qR0EumCA4BUNvq508+ei+czPOdyIYLDWwcE9i+2gYg1Qltjrq7vbwEdxxA8v0CSKUakE/w8+u59PNvRm+GDr2L+JWp8MGnwOHb+GPvmLslrQICtP2B+gJfqyHhyEw/n+I3JZkqFcj1UTjPRUeeI7Ei2F8DMlsGkMQLmh/9htcYZeZ/PcIEsh3NBw2MUluzIzF3bnXVj3qH+CpJRCtLoLHwhzhS4gTC46LDipy8AiBUe/WRValfYFtY/UisxwiGJYigKm6eNRzAWokKwdNYOhn72X9DjXRF+pUDzRSbJGbgLHPec8fW/4uJ5hcDcu4NM6fNZwwk9X1fRHsAuAtu5+l1jhAgwxEC84BsGHegv+URITDjOLrBSlMDpjO4xwZ+HZ173Nb4fAJ7bPOLq+hU+R0eeuOLfZBzOILGEPzqOwqg+M7M40h643vmyD8xkOxSfQ7R+n1R1k9nBqAvX3FM00Ur2Dng9Zno9jxVfmeDoPm5HO6DZ5i45coq+60hOTs7itx/LQ6ktusq34UrDiT+GbYS3ZOTgMYjxmwHuATOkznBN7BiUd4XsfpFexDX+W4Gf575iUAeumiI1p3voq3nhdrM2qH7Ty/meCq7BBo8vm6wQ55edvCMOXQ2MLRusAvei6GnT68VWBm51GYZSN4z7ybfk+N9mW+4dP787xAehmHZfy0/PYcWH+hvcL/MvsDmwS4Bsun82cDSm1/AqZHmU1rLGl356ZeFAPPcF1IQ+5C/lBqtu5SzDee7oFZlB8/J1TDifIk9gQ3Y0i6X73QasnI9Zwylzl80MoG9/WWOZe+lImTBrosGkvG9++W73WQtn70IDmkePPsDGcnqpgt5iT0uGJzxk95F2WIDHL6J7xMUPjlhBTOdHtmiDHkb1pllrLSW+YlGpBwyb8nib17+inq1qT0ni3MZ2Z5pka0Ge/HJZnRc66aNeaNOBDLwHMyTOwlhfAAYxfzd2E5GDsfn2ZE3OIuOz+fJmkxeDKy8Lgu14BRyLBzd4FBzgcQWg61+EOFocFTnNfgywwcAixuSu9QDi5Ur++XOcOnAj8dKvE3gN2P7okAS1vyA0PcfFmI+y6gHzsHmIF/HPa1tZVR5Jc1lBe+KWPUoBsa3ub7Fe5eerOzDGBMnofFf4hUy0chrJSp1j/G7Z4WVkn5YAEgJOjTY7W833o9/5MfxcJKDYQPcrL4nQBKtqY6gl6/fv1/JIZJ6zTwefwAsUPWDvP2a3GTy16f9y0e9ox8EEuqOtxVJL9NClIrNoUHsbFAfBke6r9ux31e6Wgu4Qwe9SAmegU+03epPBzIR6P7LK6gGDb1qQLAokJ5qG8kkEIDIxhcSv1jzR8/6OS0AJD7Vju6Bn31qU3vfAFOCanJmJaNAJle0GGln6rLiliwuN6h4ne4mdYj/1slU2AamU7Y1m8fV6ZPT+F9s53ghbNNunksnb9KoQPcrjDYmMUzVcK09NLEV490UbzMvR5r7PXNgNn6rMI18snHAvjIRafqvkU3YaXA6o8CAuV5mCmHfRJDoR80S8tgZ/yPsSm7LXxvNlg3G356urvhj/bC6I+Sg8nhm10CdsHISTy77idofOYPT6tnYCxBhf863RostSqjAS4dRCbcrUnvOWtucRCRKRkpkmOzHj+JChj+OyP9Ag8mTbBGcW3fokLnNI2Zlb+F1e0Wu/ivFkEmCs17aPqdLgh9Itf0kt/7jK85aG0d8uAqQxDULxyl6ZLJqfZywtTfW7FKO7RQO0SSjtT7IA4ZZ8NPI6N/arTABXPPyE7LYic1mDkL++dOPqIA356imluxjkgYD/h89T4JtAu08aBRajBayuvvlavXK49rzY06rAc2+m9+7xP7YSmIwccZnBcjZeIplYER53cQ4Ql2NZRJatO8SBel6pwyUNKbUzjGBUZuyBkunBMF5FfBUutWQ8v96zMnfa20jwFiAZhfim180XHWZ2u9JWC85p51zbr2k+TgqlrUSfvPfsOQXNcamZK8eXYBcesHlJC1R+vs+DRXJxGPOWikcAGMOXrnOIEjcOQ2HgKO7BqtKSSdVoUpbneebq75bI7JK5lXqUy39yoIFZZj+rWlWdVPfi0waCDwWjaZ6lvwlWm4mEMazJ8wOrzKTqD5l2JmJzoVZVCm8VVcl3l9BCXYJgPOgeyWRsPD8gapt1guQgbFHwJHdh10ctqqN4tjNqjje6ajp0Ow5j1UfbJLnsPmKQCuBdh3/x5Xnl0hJjt0s28J7qmSXUQcByA/z31WSq9OkplyKflk3d2w1LvJh5lCMJJGCtuW+egaSnEUD5lMRLJtEsd45JtDejMCQ1tZ57XmbaQHBw7gJNjB/zlv+H/9gH3aD3fww+ZrUfMvk0bR3R87I9jxuv71+phI4diWCMSV5HowkkRFbsSRLIW2JaWywuCKqT+xbCZhtw7I4YcWKgWewvivQ2SwvTF8ebCNelKvsJ3t48HKXPXy55zC7M+2uyyMbBgdvcOMEmx7kD4P71t0YHL0EBzODxpPNu2TTn7qL1r7Ju4twN98O6ghIWgeWnMwBFDheVXZIqkB0rc1rkMBWXDfh4/2B8VHJpAHn7m73euy5TfUzYyxAtqnPXf/YFe3uv/66v1Iwu5Bkt/tvHbvdpLVb3PG1pervhr4/K8Muz/Rkx6NLQxEjR1jl+8/Pjd3z3aHvi/RL554Xrd3KJlv9kDEpYcnjzF7CcLAnjeDoLuZrnf4oKzhOdRLpBIG1ZkDvvu5Ut0KXrfuKkBarjS1Hu9J/OmNXhQMaJZTmaCHUZ0uN5ixH8LT2V4v0c9fVcuw0R9DY1r5qUdJ3S+HnvLZ5lRcdg1/eu/dNm83+8Wxd1U00ypJTOTJiIk53Gi9Xr+W0/yX+ozUiV+92msTdqBosnHeInUMEat3X9rQIhKXXexCQiDQLiT7MMpD3wqsmcyPHoVgBbXBnaJsrUvMA9U0j0H8ELNm01X1OCBof/nOwZ8fGjdZu+2uubgSr99P1gf3O8gcgybET7EuFezUft0QmC5e4qLDGa3hkEudd0ACGRB5K3bdhsZaBtNkiwvU58SnfFAN5rTRpUzfyzJFk02xGIRmqYT8DiWy4hyKAXnOfB5xQwFlEwRFJouq7VWclvJHuDE5ss4yksJ34xC/mxG+jarq46tzXhcT3bLJDqsFaQ7uFIal+VPHFOdJKsLmlf46KDKQFkI0Tx54WUzcgWhED/oxFKw+zABLRqaLaMZC0PmIgJ4PDuQAAcxf3urpna8z7gAISJHUY8IjElLg4X8kp+6ng2GGMt7lY0mooVoDYUtiQXfWu6AjR6xIr04/q3iw+GxhISn8bNE5scAMpEa2GEP/4hisCo75pRBMh7E6BXO0EyCNv7UAa6slfd5p6AtIYZclK0cIFVwa5izlBUY1n6DngR+s9vHDGRhDCnTAlj4jKWlfv5sK0ITp1oCMz/BB6j9sH0UpZAJkuTzKQAQOJgEjaFn34my4DIA2i6zRb+nNkEBmOU/6AY1Ds6uime5SrJ8MZzo2jZQEDdQ6AY8Q4Ahn9r+lTpziqp4NxXMPunKj8SJw+68DA1Y5lA2SZsxCGH0qc8btQdpgjzaoJ0+c6BUgCkJwmec+dDgRIZIN4jsR8uSV6aHYeGK8Wfuau7Z7p+b9uo7g4WVolaupxw0aGytW4LACY9LfCj2347HEcTjQf29AvqZN15KxajHiO7N7UlhlGJv/rypEmCyCDN9yFG5QAycH+GwuYIwOgGQNp7G73TekBko/D0z+P9qXDEVNHHCnSco8YibkGqKLuWk5XwbyVoXJVlggFWV2k5C0SPx2JVK4fX9UPAVlEqaK/WHzcJ+aHzJFsUk5dJ8NaEHL+MX9ao0AaxEV7IKnpQPfwVamsdPXnqGBwq540A8QwIOocmuqRSHHUyh1YZc6I+nMHhcyNBl4JjhFLWoMvWM90F+pq0l+YCEDCK4m8hm1RWxMcAqK1GtNXfmSJOTJgLwGADIIW2JE2Izk4AiT0vqZSj1Sq+A8AOX6rzu7b+uIQEUBj/yoZ3YquAtgEKUoKuhWPq+NBsvuoOBPalodgVSAtyki02WBvJd8glR0AJPLhpggOASn7sT1kxv01ONKw/LQeSMv0WrWNEGV89WcAcqKeODIQzsNcB4IQxYVrHJMRF8FUB75oOmQTC99QBjHRm07ce/hFfc0WryYD8wNvLf8NOP+rYRyenAkBMluesgDSbEeycVgMMtfE/NjmumYDuX3SZs8hY/2fYIYO1BuQhDJ4ZdCdjlmxokZWNx53qGvAyoyp/IgvsJ3xk9tEdXY/CwO5AdkcyBaiNKNg+6r7Wz84E7z2Z4MMLf4+nV8zftuyQ+B4Zsu3nBBXaP33v2jUZLP7Pf++4Y8DZvVfkYbOyV2cnFFnqgFfTVzz4bSENnggUWQnnN4PHDHEcIC583oOAcoj0XIyPZC18b77Cikt7//tnSPTBaTMTF/mf/d8x5+3fUdrS+768HSHzfS5u78bn8iOuztXKl0a6n/Y/aXNNB3haaT5f05+8IwrVN4+8l2+7oCEMqrslbPWeCDXwueKdTtLRlvzxjhqa3QVrCPEu+2yUHdsenT0Rh73OhQ92W+gAtz/5rhJXb7ZE9hVf6Ct34xKrdQsp2/dHB1Yx/9c6iTR4FOXR0eLwRtYNcj8louFWruuhB4oVG8LBQzfVsHlAmlQg6E1w7LUjF0yQZK6YhH8QTzCI48kMar7dY94faAd6xZkuSajhmSbje0Gicd5SR5p4kRKybbY2LKRt2XaN7ZQHD28cWNrzmQLoie8JYtAm3bUl681CRVoel8k5X5ZqRIHqwZ/aKAwZsySLI4YAI0EMB2+THwBcTRwEvxmhYwiZWYXAbc+wlHu2/8If5JsgTikvT5v3Vrx74RTBUn4zECtiS54S1+cccg9n4bmY2zgGdh9tUz0nFcSLfD1R/+2LsMGrbW7nS9VptMhfOcJkORnTJ/uwdnaIlgLy8SnM58ohsAuwL2vBIxm7apnIBukxlXEuaJqQHKMQIITHDoI6fHJA9lhL1iXKZB/xwRIVLgyPOtKcIuL2a+VFhswgdZCmGGsgHkDU/cxkD8sVpXMkmWwobrkSAN7STXXR78YV7VG+6qIpIWD9VwSwbtLx7UZCuoqAmmFmCRzWzntflR2FZT4I5+b6SWtVWAJRVwhWK1dDp65fzSSNJ3suM+segoPKvmq8NBswq9zqm7zV7Eg3VnGcXnK1b93AnSYHUGYDrWOJYlm42BAaiw5vnoGXZGr9UdGMqgDw9Mf6EySS2dRsDWsdMbZ++lPBUcsXtFKt8+6pdh7zoXLBEjpkA0XD7OiT62T/ZWuZeFe/cclrZgcJw9Avr7Jio47R/wZGyS1DsDWo6NxhRKycfxGxF6cgAi2pWboMBlkwGoZ9AtkV4CsZxKFxjf7mO6U0IFIDEYrhAVJVXQCu+LTqWuSHsBbwrKXrhJ/DJOSNzOqkKuwRNqCoM5zIf/BydcGoF2KZGU/Lx6H0XHSNOumI74nQduKi7XOKW5LkzrkFMlxREmS9nzXWh8I4qnPhbgVmlfYhSSdJ4pb9UiQORrUDTk/dQYr/Fj/RL60WkrVGiRaaUMeVJuLJ84VE3KZkGR1xEhyyXI0HYAT1gfVkbErms6yIJIKsB7JkAv6oja9V38CcZWvALk8SKuco16ZNiH8JMa0c0VfXVaE3GQjrbAUSv/PHaS2rnDjMiOGzAJJJV8hO1jOUXP/gGTiWoqoNedJ2hAGKwtXy40MzSpyLiWVpffAygy5/EhgYz95KRLVNVjRc5YpCWxaIRkd7Vdo2ZIWf0Bf5RM5I26AFY/O/w/9LwMpw3Hg/yBGAAAAAElFTkSuQmCC" alt="Weed Science Society of America: Research, Education, Innovation. Founded 1956" width="912" height="267">
+    <span class="committee">Invasive Plant Committee</span>
+  </div>
+</header>
+<div class="preview-strip" id="previewStrip" hidden><b>Preview</b>Responses are not being saved. Add the Google Sheet link in the settings to go live.</div>
+<nav class="rail" id="rail" aria-label="Survey progress" hidden>
+  <div class="rail-inner">
+    <ol class="rail-steps" id="railSteps"></ol>
+    <div class="rail-mobile" id="railMobile"></div>
+  </div>
+</nav>
+<main class="wrap" id="app" tabindex="-1"></main>
+<footer>
+  <div class="foot-inner">
+    <span>Weed Science Society of America · Invasive Plant Committee</span>
+    <span id="versionLabel"></span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   SURVEY SETTINGS — edit these before going live
+   ============================================================ */
+const SETTINGS = {
+  // Paste the Google Apps Script web-app URL here to start saving responses.
+  // Leave empty to run in preview mode (nothing is saved).
+  submitUrl: "",
+  contactName: "Marco Burger",
+  contactEmail: "mburger@salk.edu",
+  version: "Draft 3 · October 2026"
+};
+
+/* ============================================================
+   QUESTIONS
+   Option format: [value, label, example?, flags?]
+   flags: { other: true }     -> shows a text box when chosen
+          { exclusive: true } -> clears the other choices
+   ============================================================ */
+const has = (v, list) => Array.isArray(v) ? v.some(x => list.includes(x)) : list.includes(v);
+const AI_USERS = ["often", "sometimes", "stopped"];
+
+const SURVEY_ALL = [
+  {
+    id: "about",
+    title: "About you",
+    intro: "A few questions about your work, so we can see who works on invasive plants and where.",
+    questions: [
+      { id: "sector", type: "single", required: true,
+        label: "Which sector do you work in?",
+        options: [
+          ["university", "University or college"],
+          ["federal", "Federal agency", "e.g., USDA-ARS, USFS, BLM, NPS, USFWS, USGS, USACE"],
+          ["state_local", "State, county or municipal government"],
+          ["tribal", "Tribal nation or tribal organization"],
+          ["district", "Weed district, CISMA/CWMA or conservation district"],
+          ["nonprofit", "Non-profit or conservation organization"],
+          ["industry", "Industry", "herbicides, biocontrol, seed, equipment"],
+          ["consulting", "Consulting or contract services"],
+          ["row", "Utility, transportation or rights-of-way company"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "roles", type: "multi", required: true,
+        label: "What does your work involve?", help: "Select all that apply.",
+        options: [
+          ["research", "Research"],
+          ["extension", "Extension, outreach or technical assistance"],
+          ["teaching", "Teaching"],
+          ["management", "On-the-ground management or herbicide application"],
+          ["planning", "Program management, planning or policy"],
+          ["product", "Product development, sales or regulatory work"],
+          ["study", "Graduate or undergraduate study"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "stage", type: "single", required: true,
+        label: "Where are you in your career?",
+        options: [
+          ["student", "Student"],
+          ["early", "Early career", "fewer than 10 years since your final degree"],
+          ["mid", "Mid-career", "10–20 years"],
+          ["senior", "Senior", "more than 20 years"],
+          ["retired", "Retired or emeritus"]
+        ] },
+      { id: "region", type: "single", required: true,
+        label: "Where do you mainly work?",
+        help: "U.S. regions follow WSSA's four regional weed science societies.",
+        options: [
+          ["west", "U.S. West", "e.g., CA, CO, MT, WA"],
+          ["north_central", "U.S. North Central", "e.g., IA, MN, NE, WI"],
+          ["northeast", "U.S. Northeast", "e.g., NY, PA, VT"],
+          ["south", "U.S. South", "e.g., FL, GA, TX"],
+          ["canada", "Canada"],
+          ["latin_america", "Mexico, Central or South America, or the Caribbean"],
+          ["international", "Outside the Americas"]
+        ] },
+      { id: "place", type: "text", list: "places",
+        label: "Which state, province or country?",
+        placeholder: "Start typing, e.g. Colorado" },
+      { id: "settings", type: "multi",
+        label: "Which settings does your work cover?", help: "Select all that apply.",
+        options: [
+          ["rangeland", "Rangeland & grassland"],
+          ["shrub_desert", "Shrub-steppe & desert"],
+          ["forest", "Forest & woodland"],
+          ["riparian", "Riparian areas & wetlands"],
+          ["aquatic", "Lakes, rivers & reservoirs"],
+          ["coastal", "Coastal & estuarine"],
+          ["row", "Rights-of-way", "roads, rail, utilities, pipelines"],
+          ["natural_areas", "Parks, preserves & other natural areas"],
+          ["pasture", "Pasture & hay land"],
+          ["urban", "Urban & suburban areas"],
+          ["farmland", "Field margins & other farmland"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "species", type: "multi",
+        label: "Which groups of invasive plants do you work with?", help: "Select all that apply.",
+        options: [
+          ["annual_grass", "Annual grasses", "cheatgrass, medusahead, ventenata"],
+          ["perennial_grass", "Perennial grasses & reeds", "cogongrass, phragmites, giant reed"],
+          ["forbs", "Broadleaf herbs (forbs)", "knapweeds, leafy spurge, thistles, garlic mustard"],
+          ["woody", "Woody shrubs & trees", "saltcedar, Russian olive, buckthorns, Chinese tallow"],
+          ["vines", "Vines", "kudzu, Oriental bittersweet, Japanese honeysuckle"],
+          ["submersed", "Submersed aquatic plants", "hydrilla, Eurasian watermilfoil"],
+          ["floating_emergent", "Floating & emergent aquatic plants", "water hyacinth, giant salvinia, flowering rush"],
+          ["ferns", "Ferns", "Old World climbing fern"],
+          ["parasitic", "Parasitic plants", "dodders, witchweed"],
+          ["none", "I don't work with particular species", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "topics", type: "multi",
+        label: "Which topics does your work focus on?", help: "Select all that apply.",
+        options: [
+          ["ecology", "Invasion ecology & biology"],
+          ["chemical", "Herbicides & chemical control"],
+          ["biocontrol", "Biological control"],
+          ["mechanical", "Mechanical & physical control"],
+          ["cultural", "Grazing, fire & other cultural tools"],
+          ["ipm", "Integrated management"],
+          ["restoration", "Restoration & revegetation"],
+          ["edrr", "Early detection & rapid response"],
+          ["prevention", "Prevention & spread pathways"],
+          ["mapping", "Mapping, remote sensing & drones"],
+          ["risk", "Risk assessment & distribution modeling"],
+          ["genetics", "Genetics, genomics & evolution"],
+          ["resistance", "Herbicide resistance"],
+          ["climate", "Climate change interactions"],
+          ["nontarget", "Non-target & ecosystem effects"],
+          ["human", "Economics, policy & human dimensions"],
+          ["outreach", "Education, extension & outreach"],
+          ["other", "Other", null, { other: true }]
+        ] }
+    ]
+  },
+
+  {
+    id: "funding",
+    title: "Funding & reach",
+    intro: "How your invasive plant work is funded, and how far its results reach.",
+    showIf: a => has(a.roles || [], ["research", "extension", "study"]),
+    showIfText: "Shown to people who chose Research, Extension or Graduate study in {roles}",
+    questions: [
+      { id: "fund_sources", type: "multi",
+        label: "Which sources have funded your invasive plant work in the past 3 years?", help: "Select all that apply.",
+        options: [
+          ["federal_grants", "Federal competitive grants", "e.g., USDA NIFA, NSF"],
+          ["federal_agency", "Federal land or water management agencies", "e.g., BLM, USFS, NPS, USFWS, USACE, Reclamation"],
+          ["state", "State agencies", "agriculture, natural resources, transportation"],
+          ["local", "County, municipal or weed district funds"],
+          ["tribal", "Tribal nations"],
+          ["industry", "Industry or commodity groups"],
+          ["foundation", "Foundations or non-profits"],
+          ["institution", "My own institution", "base, start-up or formula funds"],
+          ["utility", "Utilities or rights-of-way companies"],
+          ["contract", "Fee-for-service or contract work"],
+          ["none", "No dedicated funding", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "fund_main", followUp: true, type: "single", dynamicFrom: "fund_sources",
+        label: "Which one of these matters most to your program?",
+        showIf: a => (a.fund_sources || []).filter(x => x !== "none").length >= 2,
+        showIfText: "Shown if two or more sources are chosen in {fund_sources}; lists only those sources" },
+      { id: "fund_trend", type: "single",
+        label: "Over the past 5 years, how has funding for your invasive plant work changed?",
+        options: [
+          ["up_lot", "Increased a lot"],
+          ["up", "Increased somewhat"],
+          ["same", "Stayed about the same"],
+          ["down", "Decreased somewhat"],
+          ["down_lot", "Decreased a lot"],
+          ["na", "Too early in my career to say"]
+        ] },
+      { id: "impact", type: "matrix",
+        label: "How much has your funded work influenced each of these?",
+        help: "Think about the past 5 years.",
+        rows: [
+          ["science", "Scientific understanding"],
+          ["practice", "Management practices on the ground"],
+          ["policy", "Policy, regulations or agency guidance"],
+          ["training", "Training of students and new professionals"],
+          ["public", "Public awareness"]
+        ],
+        cols: [["none", "None"], ["minor", "Minor"], ["moderate", "Moderate"], ["major", "Major"], ["unsure", "Not sure"]] },
+      { id: "scale", type: "single",
+        label: "What is the largest scale at which your results are being used?",
+        options: [
+          ["site", "A single site or project"],
+          ["local", "Local", "county, district, refuge or park"],
+          ["state", "State or province"],
+          ["regional", "Multi-state or regional"],
+          ["national", "National"],
+          ["international", "International"],
+          ["unsure", "Not sure"]
+        ] },
+      { id: "measure", type: "single",
+        label: "Do you measure the impact of your work?",
+        options: [
+          ["systematic", "Yes, systematically"],
+          ["informal", "Sometimes, informally"],
+          ["want", "No, but I would like to"],
+          ["no", "No"]
+        ] },
+      { id: "measure_how", followUp: true, type: "multi",
+        label: "How do you measure it?", help: "Select all that apply.",
+        showIf: a => has(a.measure, ["systematic", "informal"]),
+        showIfText: "Shown if 'Yes' or 'Sometimes' in {measure}",
+        options: [
+          ["pubs", "Publications & citations"],
+          ["altmetrics", "Altmetrics or media coverage"],
+          ["acres", "Acres treated or restored using my recommendations"],
+          ["cover", "Changes in invasive plant cover or spread over time"],
+          ["user_surveys", "Surveys of land managers or other users"],
+          ["extension", "Workshop attendance, extension contacts or downloads"],
+          ["tools", "Use of my tools, apps or datasets"],
+          ["economics", "Cost savings or other economic analysis"],
+          ["policy", "Uptake in policy or management plans"],
+          ["feedback", "Testimonials & informal feedback"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "measure_barriers", type: "multi",
+        label: "What makes measuring impact difficult?", help: "Select all that apply.",
+        options: [
+          ["slow", "Outcomes take years to show"],
+          ["metrics", "No agreed-on metrics"],
+          ["resources", "No time or funding for follow-up"],
+          ["data_access", "Hard to get outcome data from land managers"],
+          ["funders", "Funders don't ask for it"],
+          ["attribution", "Hard to link changes to my work"],
+          ["not_difficult", "It isn't difficult", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] }
+    ]
+  },
+
+  {
+    id: "ai",
+    title: "AI & new tools",
+    intro: "Whether and how artificial intelligence shows up in your work.",
+    questions: [
+      { id: "ai_use", type: "single",
+        label: "How often do you use AI tools in your work?",
+        help: "Includes chatbots, writing and coding assistants, plant-ID apps and image classifiers.",
+        options: [
+          ["often", "Daily or weekly"],
+          ["sometimes", "Monthly or occasionally"],
+          ["stopped", "I tried them but stopped"],
+          ["interested", "Not yet, but I'm interested"],
+          ["no", "No, and I'm not interested"]
+        ] },
+      { id: "ai_tasks", followUp: true, type: "multi",
+        label: "What have you used AI for?", help: "Select all that apply.",
+        showIf: a => has(a.ai_use, AI_USERS),
+        showIfText: "Shown to people who have used AI tools ({ai_use})",
+        options: [
+          ["literature", "Finding & summarizing literature"],
+          ["writing", "Writing & editing papers, grants or reports"],
+          ["code", "Coding & statistics"],
+          ["species_id", "Identifying species from photos"],
+          ["imagery", "Analyzing drone or satellite imagery"],
+          ["modeling", "Distribution or risk modeling"],
+          ["outreach", "Extension materials, outreach or translation"],
+          ["field_data", "Field data collection"],
+          ["plans", "Drafting management or treatment plans"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "ai_effect", followUp: true, type: "single",
+        label: "Overall, how has AI affected your work?",
+        showIf: a => has(a.ai_use, AI_USERS),
+        showIfText: "Shown to people who have used AI tools ({ai_use})",
+        options: [
+          ["major", "Major improvement"],
+          ["some", "Some improvement"],
+          ["none", "No real change"],
+          ["mixed", "Mixed: some help, some harm"],
+          ["worse", "Made it worse"]
+        ] },
+      { id: "ai_example", followUp: true, type: "textarea",
+        label: "Describe one way AI has helped or hurt your work.",
+        showIf: a => has(a.ai_use, AI_USERS),
+        showIfText: "Shown to people who have used AI tools ({ai_use})" },
+      { id: "ai_concerns", type: "multi", max: 3,
+        label: "What concerns you most about AI in invasive plant work?", help: "Choose up to 3.",
+        options: [
+          ["accuracy", "Inaccurate or made-up information"],
+          ["misid", "Misidentified species"],
+          ["data", "Data privacy or ownership"],
+          ["rules", "Journal or funder rules"],
+          ["skills", "Loss of skills or expertise"],
+          ["access", "Cost or unequal access"],
+          ["energy", "Energy use & environmental footprint"],
+          ["none", "No major concerns", null, { exclusive: true }]
+        ] }
+    ]
+  },
+
+  {
+    id: "info",
+    title: "Finding information",
+    intro: "Where you get invasive plant science and management advice, and what would make it more useful.",
+    questions: [
+      { id: "info_sources", type: "multi", max: 3,
+        label: "Where do you go for invasive plant science or management recommendations?",
+        help: "Choose up to 3 you rely on most.",
+        options: [
+          ["extension", "Extension specialists & publications"],
+          ["journals", "Peer-reviewed journals"],
+          ["labels", "Herbicide labels & company representatives"],
+          ["agency", "State or federal agency guidance"],
+          ["local_groups", "Weed districts, CISMAs/CWMAs or invasive species councils"],
+          ["peers", "Colleagues & peers"],
+          ["events", "Conferences, field days & workshops"],
+          ["online", "Online databases & websites", "e.g., EDDMapS, Invasive.org"],
+          ["media", "Webinars, podcasts, video or social media"],
+          ["ai", "AI chatbots"],
+          ["consultants", "Consultants"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "info_needs", type: "multi", max: 3,
+        label: "What would make invasive plant research more useful to you?", help: "Choose up to 3.",
+        options: [
+          ["plain", "Plain-language summaries"],
+          ["open_access", "Free (open-access) articles"],
+          ["regional", "Recommendations for my region"],
+          ["long_term", "Long-term (5+ year) treatment results"],
+          ["cost", "Cost & effectiveness comparisons"],
+          ["tools", "Decision-support tools or apps"],
+          ["demos", "Field demonstrations & tours"],
+          ["contact", "Direct contact with researchers"],
+          ["my_species", "Research on the species I deal with"],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "info_gaps", type: "textarea",
+        label: "What questions about invasive plants do you most often struggle to find good answers to?" }
+    ]
+  },
+
+  {
+    id: "ipsm",
+    title: "The IPSM journal",
+    intro: "How you use Invasive Plant Science and Management (IPSM), WSSA's journal for invasive plant research, and what keeps you from publishing there.",
+    questions: [
+      { id: "ipsm_engage", type: "multi",
+        label: "How do you engage with Invasive Plant Science and Management (IPSM)?", help: "Select all that apply.",
+        options: [
+          ["read_regular", "I read it regularly"],
+          ["read_occasional", "I read it occasionally"],
+          ["published", "I have published in it"],
+          ["reviewed", "I have reviewed for it"],
+          ["editor", "I have served as an editor"],
+          ["aware", "I know of it but don't use it", null, { exclusive: true }],
+          ["unfamiliar", "I'm not familiar with it", null, { exclusive: true }]
+        ] },
+      { id: "ipsm_barriers", type: "multi",
+        label: "What keeps you from publishing in IPSM, or publishing there more often?", help: "Select all that apply.",
+        options: [
+          ["fees", "Publication fees"],
+          ["prestige", "Impact factor or journal prestige"],
+          ["fit", "Unsure whether my work fits"],
+          ["speed", "Review or publication speed"],
+          ["broader", "I prefer broader ecology or management journals"],
+          ["employer", "Tenure or employer expectations"],
+          ["open_access", "Funder open-access requirements"],
+          ["unfamiliar", "I don't know the journal well"],
+          ["no_research", "I don't publish research", null, { exclusive: true }],
+          ["nothing", "Nothing, I already publish there", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] }
+    ]
+  },
+
+  {
+    // Switched off for now. Change to enabled: true to include this section.
+    enabled: false,
+    id: "wssa",
+    title: "WSSA meetings & membership",
+    intro: "How you connect with WSSA and its meetings.",
+    questions: [
+      { id: "orgs", type: "multi",
+        label: "Which of these organizations do you belong to?", help: "Select all that apply.",
+        options: [
+          ["wssa", "Weed Science Society of America (WSSA)"],
+          ["wsws", "Western Society of Weed Science (WSWS)"],
+          ["ncwss", "North Central Weed Science Society (NCWSS)"],
+          ["newss", "Northeastern Weed Science Society (NEWSS)"],
+          ["swss", "Southern Weed Science Society (SWSS)"],
+          ["apms", "Aquatic Plant Management Society (APMS) or a chapter"],
+          ["srm", "Society for Range Management (SRM)"],
+          ["ser", "Society for Ecological Restoration (SER)"],
+          ["esa", "Ecological Society of America (ESA)"],
+          ["council", "A state or regional invasive plant council"],
+          ["naisma", "North American Invasive Species Management Association (NAISMA)"],
+          ["none", "None of these", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "wssa_attend", type: "single",
+        label: "How many WSSA annual meetings have you attended in the past 5 years?",
+        options: [["0", "None"], ["1", "1"], ["2_3", "2–3"], ["4_5", "4–5"]] },
+      { id: "wssa_barriers", type: "multi",
+        label: "What limits your participation in WSSA meetings?", help: "Select all that apply.",
+        options: [
+          ["travel", "Travel costs"],
+          ["registration", "Registration costs"],
+          ["time", "Time or competing meetings"],
+          ["sessions", "Too few invasive plant sessions"],
+          ["crop_focus", "The program feels focused on crop weeds"],
+          ["peers", "Few people in my field attend"],
+          ["location", "Meeting locations"],
+          ["unaware", "I didn't know about WSSA meetings"],
+          ["nothing", "Nothing, I attend when I can", null, { exclusive: true }],
+          ["other", "Other", null, { other: true }]
+        ] },
+      { id: "section_pref", type: "single",
+        label: "Does a dedicated Invasive Plant Science & Management section for talks and posters make you more likely to present at WSSA?",
+        help: "WSSA's 2027 program groups invasive plant work in rangeland, rights-of-way, aquatic and natural areas into this section.",
+        options: [
+          ["much", "Much more likely"],
+          ["somewhat", "Somewhat more likely"],
+          ["no_diff", "No difference"],
+          ["unsure", "Not sure"]
+        ] },
+      { id: "engage_more", type: "multi", max: 3,
+        label: "What would make you more likely to get involved with WSSA?", help: "Choose up to 3.",
+        options: [
+          ["travel_grants", "Travel grants"],
+          ["discounts", "Lower registration for students, early-career or non-members"],
+          ["virtual", "Virtual or hybrid options"],
+          ["symposia", "More invasive plant symposia"],
+          ["mentoring", "Mentoring & networking for early-career scientists"],
+          ["tours", "Field tours of invaded or restored sites"],
+          ["pub_fees", "Help with publication fees"],
+          ["joint", "Joint meetings with other societies", "e.g., SRM, APMS, NAISMA"],
+          ["other", "Other", null, { other: true }]
+        ] }
+    ]
+  },
+
+  {
+    id: "ahead",
+    title: "Looking ahead",
+    intro: "Two open questions, then an optional way to stay in touch.",
+    questions: [
+      { id: "research_needs", type: "textarea",
+        label: "What are the most pressing research needs in invasive plant science over the next 10 years?" },
+      { id: "committee_next", type: "textarea",
+        label: "What is one thing the WSSA Invasive Plant Committee should do next?" },
+      { id: "followup", type: "multi", contact: true,
+        label: "Would you like to stay involved?", help: "Select any that apply.",
+        options: [
+          ["results", "Send me a summary of the survey results"],
+          ["present", "I'm interested in presenting at a future invasive plant symposium"],
+          ["join", "I'm interested in joining the Invasive Plant Committee"]
+        ] },
+      { id: "email", followUp: true, type: "email", contact: true,
+        label: "Your email address",
+        help: "Kept in a separate list that isn't linked to your survey answers.",
+        placeholder: "name@example.org",
+        showIf: a => (a.followup || []).length > 0,
+        showIfText: "Shown if any option is chosen in {followup}" }
+    ]
+  }
+];
+
+/* Active sections, numbered automatically: 1.1, 1.2 … follow-ups get a letter (2.1a).
+   {question_id} in a showIfText is replaced with that question's number. */
+const SURVEY = SURVEY_ALL.filter(s => s.enabled !== false);
+(function numberQuestions(){
+  const nums = {};
+  SURVEY.forEach((s, si) => {
+    let n = 0, sub = 0;
+    s.questions.forEach(q => {
+      if (q.followUp){ sub++; q.num = (si + 1) + "." + n + String.fromCharCode(96 + sub); }
+      else { n++; sub = 0; q.num = (si + 1) + "." + n; }
+      nums[q.id] = q.num;
+    });
+  });
+  const fill = t => t && t.replace(/\{(\w+)\}/g, (m, id) => nums[id] || id);
+  SURVEY.forEach(s => { s.showIfText = fill(s.showIfText); s.questions.forEach(q => { q.showIfText = fill(q.showIfText); }); });
+})();
+
+const PLACES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Puerto Rico","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming","Guam","U.S. Virgin Islands","Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Nova Scotia","Ontario","Prince Edward Island","Quebec","Saskatchewan","Northwest Territories","Nunavut","Yukon","Mexico","Australia","Brazil","Argentina","Chile","China","Germany","India","New Zealand","South Africa","Spain","United Kingdom"];
+
+</script>
+<script>
+(function(){
+"use strict";
+const DRAFT_KEY = "wssa-ipc-survey-draft-v1";
+const app = document.getElementById("app");
+const state = { answers:{}, view:"intro", step:0, started:null, hasDraft:false, lastRow:null };
+
+/* ---------- helpers ---------- */
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const opt = o => ({ v:o[0], t:o[1], ex:o[2] || null, other:!!(o[3] && o[3].other), exclusive:!!(o[3] && o[3].exclusive) });
+const allQuestions = () => SURVEY.flatMap(s => s.questions.map(q => Object.assign({ section:s }, q)));
+const findQ = id => allQuestions().find(q => q.id === id);
+const sectionOn = s => !s.showIf || s.showIf(state.answers);
+const qOn = q => !q.showIf || q.showIf(state.answers);
+const visibleSections = () => SURVEY.filter(sectionOn);
+const reduceMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function optionsFor(q){
+  if (q.dynamicFrom){
+    const src = findQ(q.dynamicFrom);
+    const picked = state.answers[q.dynamicFrom] || [];
+    return src.options.map(opt).filter(o => picked.includes(o.v) && !o.exclusive).map(o => {
+      if (o.other){
+        const txt = (state.answers[q.dynamicFrom + "_other"] || "").trim();
+        return { v:o.v, t: txt ? "Other: " + txt : "Other", ex:null };
+      }
+      return { v:o.v, t:o.t, ex:o.ex };
+    });
+  }
+  return (q.options || []).map(opt);
+}
+
+function saveDraft(){
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ answers:state.answers, step:state.step, started:state.started })); } catch(e){}
+}
+function loadDraft(){
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+    if (d && d.answers && Object.keys(d.answers).length){ return d; }
+  } catch(e){}
+  return null;
+}
+function clearDraft(){ try { localStorage.removeItem(DRAFT_KEY); } catch(e){} }
+
+/* ---------- rendering ---------- */
+function render(){
+  const rail = document.getElementById("rail");
+  rail.hidden = !(state.view === "section");
+  if (state.view === "intro") renderIntro();
+  else if (state.view === "section") renderSection();
+  else if (state.view === "review") renderReview();
+  else if (state.view === "thanks") renderThanks();
+}
+
+function labelCard(){
+  const contact = SETTINGS.contactEmail ? `${esc(SETTINGS.contactName)} · <span>${esc(SETTINGS.contactEmail)}</span>` : esc(SETTINGS.contactName);
+  return `<div class="label-card" role="group" aria-label="Survey details">
+    <div class="lc-head"><span>Survey details</span><span>2026–27</span></div>
+    <dl>
+      <dt>Conducted by</dt><dd>WSSA Invasive Plant Committee</dd>
+      <dt>For</dt><dd>Researchers, extension educators, students, land managers and anyone else who works on invasive plants. WSSA membership not required.</dd>
+      <dt>Time</dt><dd>About 8 minutes</dd>
+      <dt>Responses</dt><dd>Anonymous. If you choose to leave an email address, it is kept in a separate list.</dd>
+      <dt>Questions</dt><dd>${contact}</dd>
+    </dl>
+  </div>`;
+}
+
+function renderIntro(){
+  const draft = state.hasDraft;
+  app.innerHTML = `
+    <p class="eyebrow">WSSA Invasive Plant Committee</p>
+    <h1>Invasive Plant Community Survey</h1>
+    <p class="lede">Who studies and manages invasive plants today, how is that work funded, and where do people turn for answers? Your responses will guide the WSSA Invasive Plant Committee's symposia, meeting sessions and priorities.</p>
+    ${labelCard()}
+    ${draft ? `<div class="notice" role="status"><p>You have an unfinished response on this device.</p><button class="btn btn-primary" type="button" data-act="resume">Continue where I left off</button><button class="btn-link" type="button" data-act="discard">Start over</button></div>` : ""}
+    <label class="consent" for="consent">
+      <input type="checkbox" id="consent">
+      <span>I understand that taking part is voluntary, that I can skip any question not marked required, and that results will be reported only in summary form.</span>
+    </label>
+    <div class="actions">
+      <button class="btn btn-primary" type="button" id="startBtn" data-act="start" disabled>Start the survey</button>
+      <button class="btn-link" type="button" data-act="review">See all questions</button>
+    </div>`;
+  const c = document.getElementById("consent");
+  const b = document.getElementById("startBtn");
+  c.addEventListener("change", () => { b.disabled = !c.checked; });
+}
+
+function renderRail(){
+  const vis = visibleSections();
+  const curId = vis[state.step] && vis[state.step].id;
+  const curIdx = SURVEY.findIndex(s => s.id === curId);
+  document.getElementById("railSteps").innerHTML = SURVEY.map((s, i) => {
+    const on = sectionOn(s);
+    let cls = !on ? "skipped" : (s.id === curId ? "current" : (i < curIdx ? "done" : ""));
+    return `<li class="${cls}"${s.id === curId ? ' aria-current="step"' : ""}><div class="bar"></div><span class="lbl">${esc(s.title)}</span></li>`;
+  }).join("");
+  document.getElementById("railMobile").textContent = `Section ${state.step + 1} of ${vis.length} · ${vis[state.step].title}`;
+}
+
+function renderQuestion(q, opts){
+  const review = !!(opts && opts.review);
+  const dis = review ? " disabled" : "";
+  const a = state.answers;
+  const hidden = !review && !qOn(q) ? " hidden" : "";
+  const cond = review && q.showIf ? `<p class="cond">${esc(q.showIfText || "Conditional")}</p>` : "";
+  const req = q.required ? `<span class="req">Required</span>` : "";
+  const help = q.help ? `<p class="help" id="h-${q.id}">${esc(q.help)}</p>` : "";
+  let body = "";
+
+  if (q.type === "single" || q.type === "multi"){
+    const multi = q.type === "multi";
+    const list = optionsFor(q);
+    if (q.dynamicFrom && review){
+      body = `<p class="dyn-note">Lists the sources the person chose in ${esc(findQ(q.dynamicFrom).num)}, so they can pick one.</p>`;
+    } else {
+      const cur = a[q.id];
+      body = `<div class="opts" role="${multi ? "group" : "radiogroup"}" aria-labelledby="qt-${q.id}">` + list.map(o => {
+        const checked = multi ? (Array.isArray(cur) && cur.includes(o.v)) : cur === o.v;
+        const id = `o-${q.id}-${o.v}`;
+        return `<label class="opt ${multi ? "check" : "radio"}" for="${id}">
+          <input type="${multi ? "checkbox" : "radio"}" id="${id}" name="${q.id}" value="${esc(o.v)}"${checked && !review ? " checked" : ""}${dis}>
+          <span class="mark" aria-hidden="true"></span>
+          <span class="opt-text">${esc(o.t)}${o.ex ? `<small>${esc(o.ex)}</small>` : ""}</span>
+        </label>`;
+      }).join("") + `</div>`;
+      if (list.some(o => o.other)){
+        const showOther = !review && (multi ? (a[q.id] || []).includes("other") : a[q.id] === "other");
+        body += `<input class="field other-input" type="text" id="${q.id}_other" data-other-for="${q.id}" aria-label="Other (please specify)" placeholder="Please specify" value="${esc(a[q.id + "_other"] || "")}"${showOther ? "" : " hidden"}${dis}>`;
+      }
+      if (q.max) body += `<p class="counter" id="c-${q.id}">${review ? `Up to ${q.max}` : `${(a[q.id] || []).length} of ${q.max} chosen`}</p>`;
+    }
+  } else if (q.type === "matrix"){
+    const cur = a[q.id] || {};
+    body = `<div class="matrix">` + q.rows.map(r => {
+      const nm = `${q.id}__${r[0]}`;
+      return `<div class="mrow"><div class="mlabel" id="ml-${nm}">${esc(r[1])}</div>
+        <div class="mopts" role="radiogroup" aria-labelledby="ml-${nm}">` + q.cols.map(c => {
+          const id = `o-${nm}-${c[0]}`;
+          return `<label class="pill" for="${id}"><input type="radio" id="${id}" name="${nm}" value="${esc(c[0])}" data-matrix="${q.id}" data-row="${esc(r[0])}"${cur[r[0]] === c[0] && !review ? " checked" : ""}${dis}><span>${esc(c[1])}</span></label>`;
+        }).join("") + `</div></div>`;
+    }).join("") + `</div>`;
+  } else if (q.type === "textarea"){
+    body = `<textarea class="field" id="f-${q.id}" name="${q.id}" aria-labelledby="qt-${q.id}" placeholder="Optional"${dis}>${review ? "" : esc(a[q.id] || "")}</textarea>`;
+  } else {
+    const t = q.type === "email" ? "email" : "text";
+    const list = q.list ? ` list="${q.list}"` : "";
+    const ac = q.type === "email" ? ' autocomplete="email"' : ' autocomplete="off"';
+    body = `<input class="field" type="${t}" id="f-${q.id}" name="${q.id}"${list}${ac} aria-labelledby="qt-${q.id}" placeholder="${esc(q.placeholder || "")}" value="${review ? "" : esc(a[q.id] || "")}"${dis}>`;
+  }
+
+  const textish = ["text","email","textarea"].includes(q.type) ? " text-q" : "";
+  return `<div class="q${textish}" id="q-${q.id}" data-q="${q.id}"${hidden}>
+    <div class="qhead"><span class="qnum">${esc(q.num)}</span><h3 class="qtext" id="qt-${q.id}">${esc(q.label)}${req}</h3></div>
+    <div class="qbody">${cond}${help}${body}<p class="err" id="e-${q.id}" role="alert" hidden></p></div>
+  </div>`;
+}
+
+function renderSection(){
+  const vis = visibleSections();
+  if (state.step >= vis.length) state.step = vis.length - 1;
+  const s = vis[state.step];
+  const last = state.step === vis.length - 1;
+  renderRail();
+  app.innerHTML = `
+    <p class="eyebrow">Section ${state.step + 1} of ${vis.length}</p>
+    <h2>${esc(s.title)}</h2>
+    <p class="section-intro">${esc(s.intro)}</p>
+    <form id="secForm" novalidate>
+      <div class="qlist">${s.questions.map(q => renderQuestion(q)).join("")}</div>
+      ${last ? `<div class="hp" aria-hidden="true"><label for="hpField">Leave this empty</label><input type="text" id="hpField" tabindex="-1" autocomplete="off"></div>` : ""}
+      <div class="actions">
+        <button class="btn btn-ghost" type="button" data-act="back">Back</button>
+        <span class="spacer"></span>
+        <button class="btn btn-primary" type="submit" id="nextBtn">${last ? "Submit response" : "Next section"}</button>
+      </div>
+      <p class="err" id="submitErr" role="alert" hidden></p>
+    </form>`;
+  s.questions.forEach(q => updateLimits(q.id));
+  document.getElementById("secForm").addEventListener("submit", e => { e.preventDefault(); next(); });
+  const dl = document.getElementById("places");
+  if (!dl){
+    const d = document.createElement("datalist"); d.id = "places";
+    d.innerHTML = PLACES.map(p => `<option value="${esc(p)}"></option>`).join("");
+    document.body.appendChild(d);
+  }
+}
+
+function renderReview(){
+  const all = allQuestions();
+  const conditional = all.filter(q => q.showIf || q.section.showIf).length;
+  app.innerHTML = `
+    <p class="eyebrow">All questions</p>
+    <h1>Invasive Plant Community Survey</h1>
+    <p class="lede">Every question in the survey, including ones people only see based on earlier answers. Conditional questions are tagged.</p>
+    <div class="review-meta"><span><b>${all.length}</b> questions</span><span><b>${SURVEY.length}</b> sections</span><span><b>${conditional}</b> conditional</span><span><b>${all.filter(q=>q.required).length}</b> required</span></div>
+    <div class="actions"><button class="btn btn-ghost" type="button" data-act="home">Back to start</button></div>
+    <div class="review">` + SURVEY.map((s, i) => `
+      <section class="review-section">
+        <p class="eyebrow">Section ${i + 1}</p>
+        <h2>${esc(s.title)}</h2>
+        <p class="section-intro">${esc(s.intro)}</p>
+        ${s.showIf ? `<p class="cond" style="margin-top:.75rem">${esc(s.showIfText)}</p>` : ""}
+        <div class="qlist">${s.questions.map(q => renderQuestion(q, { review:true })).join("")}</div>
+      </section>`).join("") + `</div>
+    <div class="actions"><button class="btn btn-ghost" type="button" data-act="home">Back to start</button></div>`;
+}
+
+function renderThanks(){
+  const preview = !SETTINGS.submitUrl;
+  const row = state.lastRow;
+  const rows = row ? Object.keys(row.row).map(k => `<tr><th>${esc(k)}</th><td>${esc(row.row[k])}</td></tr>`).join("") : "";
+  const contactRows = row && row.contact ? Object.keys(row.contact).map(k => `<tr><th>${esc(k)}</th><td>${esc(row.contact[k])}</td></tr>`).join("") : "";
+  app.innerHTML = `
+    <div class="thanks-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <p class="eyebrow">${preview ? "Preview complete" : "Response recorded"}</p>
+    <h1>Thank you</h1>
+    <p class="lede">${preview
+      ? "This was a preview, so nothing was saved. Below is exactly what would be written to the response sheet."
+      : "Your answers have been sent to the WSSA Invasive Plant Committee. A summary of results will be shared with WSSA members and anyone who asked to receive it."}</p>
+    <div class="actions"><button class="btn btn-ghost" type="button" data-act="restart">Start a new response</button></div>
+    ${preview && row ? `<details class="preview-data" open><summary>Response sheet row</summary><div class="tbl-wrap"><table>${rows}</table></div></details>
+      ${contactRows ? `<details class="preview-data"><summary>Contacts sheet row (stored separately)</summary><div class="tbl-wrap"><table>${contactRows}</table></div></details>` : ""}` : ""}`;
+}
+
+/* ---------- interaction ---------- */
+function updateLimits(qid){
+  const q = findQ(qid); if (!q) return;
+  const box = document.getElementById("q-" + qid); if (!box) return;
+  if (q.type === "multi" && q.max){
+    const chosen = (state.answers[qid] || []);
+    box.querySelectorAll('input[type="checkbox"]').forEach(inp => {
+      inp.disabled = !inp.checked && chosen.length >= q.max;
+    });
+    const c = document.getElementById("c-" + qid);
+    if (c) c.textContent = `${chosen.length} of ${q.max} chosen`;
+  }
+  const other = document.getElementById(qid + "_other");
+  if (other){
+    const v = state.answers[qid];
+    other.hidden = !(Array.isArray(v) ? v.includes("other") : v === "other");
+  }
+}
+
+function refreshSection(changedId){
+  const vis = visibleSections();
+  const s = vis[state.step]; if (!s) return;
+  s.questions.forEach(q => {
+    const el = document.getElementById("q-" + q.id); if (!el) return;
+    const on = qOn(q);
+    if (el.hidden === on) el.hidden = !on;
+    if (q.dynamicFrom && q.dynamicFrom === changedId){
+      const valid = optionsFor(q).map(o => o.v);
+      if (state.answers[q.id] && !valid.includes(state.answers[q.id])) delete state.answers[q.id];
+      el.outerHTML = renderQuestion(q);
+    }
+  });
+  renderRail();
+  const nb = document.getElementById("nextBtn");
+  if (nb) nb.textContent = state.step === vis.length - 1 ? "Submit response" : "Next section";
+}
+
+app.addEventListener("change", e => {
+  const t = e.target;
+  if (state.view !== "section") return;
+  if (t.dataset.matrix){
+    const m = state.answers[t.dataset.matrix] || (state.answers[t.dataset.matrix] = {});
+    m[t.dataset.row] = t.value;
+    clearErr(t.dataset.matrix);
+  } else if (t.type === "checkbox" && t.name){
+    const q = findQ(t.name); if (!q) return;
+    let arr = state.answers[q.id] || [];
+    const o = optionsFor(q).find(x => x.v === t.value);
+    if (t.checked){
+      if (o && o.exclusive) arr = [t.value];
+      else arr = arr.filter(v => { const oo = optionsFor(q).find(x => x.v === v); return !(oo && oo.exclusive); }).concat(t.value);
+    } else arr = arr.filter(v => v !== t.value);
+    state.answers[q.id] = arr;
+    document.getElementById("q-" + q.id).querySelectorAll('input[type="checkbox"]').forEach(inp => { inp.checked = arr.includes(inp.value); });
+    updateLimits(q.id); clearErr(q.id); refreshSection(q.id);
+  } else if (t.type === "radio" && t.name){
+    state.answers[t.name] = t.value;
+    updateLimits(t.name); clearErr(t.name); refreshSection(t.name);
+  }
+  saveDraft();
+});
+app.addEventListener("input", e => {
+  const t = e.target;
+  if (state.view !== "section") return;
+  if (t.dataset.otherFor){ state.answers[t.dataset.otherFor + "_other"] = t.value; }
+  else if (t.name && (t.tagName === "TEXTAREA" || t.type === "text" || t.type === "email")){ state.answers[t.name] = t.value; clearErr(t.name); }
+  saveDraft();
+});
+app.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const act = b.dataset.act;
+  if (act === "start"){ state.answers = {}; state.started = Date.now(); state.step = 0; clearDraft(); go("section"); }
+  else if (act === "resume"){ go("section"); }
+  else if (act === "discard"){ clearDraft(); state.answers = {}; state.hasDraft = false; state.step = 0; renderIntro(); }
+  else if (act === "review"){ go("review"); }
+  else if (act === "home"){ go("intro"); }
+  else if (act === "back"){ if (state.step === 0) go("intro"); else { state.step--; go("section"); } }
+  else if (act === "restart"){ state.answers = {}; state.step = 0; state.started = null; state.hasDraft = false; state.lastRow = null; clearDraft(); go("intro"); }
+});
+
+function go(view){
+  state.view = view;
+  if (view === "intro") state.hasDraft = !!loadDraft() && Object.keys(state.answers).length > 0;
+  render();
+  saveDraft();
+  window.scrollTo({ top:0, behavior: reduceMotion() ? "auto" : "smooth" });
+  app.focus({ preventScroll:true });
+}
+
+function clearErr(qid){
+  const box = document.getElementById("q-" + qid); if (!box) return;
+  box.classList.remove("invalid");
+  const e = document.getElementById("e-" + qid); if (e) e.hidden = true;
+}
+
+function validateSection(s){
+  let first = null;
+  s.questions.forEach(q => {
+    if (!qOn(q)) return;
+    const v = state.answers[q.id];
+    let msg = "";
+    if (q.required && (v == null || v === "" || (Array.isArray(v) && !v.length))) msg = q.type === "multi" ? "Choose at least one option to continue." : "Choose an option to continue.";
+    if (!msg && q.type === "email" && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) msg = "Enter an email address like name@example.org, or leave it blank.";
+    const box = document.getElementById("q-" + q.id), e = document.getElementById("e-" + q.id);
+    if (msg){ box.classList.add("invalid"); e.textContent = msg; e.hidden = false; if (!first) first = box; }
+    else { box.classList.remove("invalid"); if (e) e.hidden = true; }
+  });
+  if (first){
+    first.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block:"center" });
+    const f = first.querySelector("input,textarea"); if (f) f.focus({ preventScroll:true });
+    return false;
+  }
+  return true;
+}
+
+function next(){
+  const vis = visibleSections();
+  const s = vis[state.step];
+  if (!validateSection(s)) return;
+  if (state.step < vis.length - 1){ state.step++; go("section"); }
+  else submit();
+}
+
+/* ---------- output ---------- */
+function labelOf(q, v){
+  if (q.type === "single" || q.type === "multi"){
+    const base = q.dynamicFrom ? findQ(q.dynamicFrom) : q;
+    const o = (base.options || []).map(opt).find(x => x.v === v);
+    return o ? o.t : v;
+  }
+  return v;
+}
+
+function buildRow(){
+  const a = state.answers;
+  const row = {
+    response_id: (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2),
+    submitted_at: new Date().toISOString(),
+    minutes_taken: state.started ? Math.round((Date.now() - state.started) / 6000) / 10 : "",
+    source: new URLSearchParams(location.search).get("src") || "direct",
+    survey_version: SETTINGS.version
+  };
+  const contact = {};
+  SURVEY.forEach(s => {
+    const sOn = sectionOn(s);
+    s.questions.forEach(q => {
+      const on = sOn && qOn(q);
+      const v = on ? a[q.id] : undefined;
+      if (q.contact){
+        if (q.type === "multi") contact.interests = (v || []).map(x => labelOf(q, x)).join("; ");
+        else if (v) contact.email = String(v).trim();
+        return;
+      }
+      if (q.type === "matrix"){
+        q.rows.forEach(r => {
+          const c = v && v[r[0]] ? q.cols.find(cc => cc[0] === v[r[0]]) : null;
+          row[`${q.id}__${r[0]}`] = c ? c[1] : "";
+        });
+      } else if (q.type === "multi"){
+        row[q.id] = (v || []).map(x => labelOf(q, x)).join("; ");
+      } else if (q.type === "single"){
+        row[q.id] = v ? labelOf(q, v) : "";
+      } else {
+        row[q.id] = v ? String(v).trim() : "";
+      }
+      const base = q.dynamicFrom ? null : q;
+      if (base && (base.options || []).some(o => o[3] && o[3].other)){
+        const chose = Array.isArray(v) ? v.includes("other") : v === "other";
+        row[q.id + "_other"] = chose ? (a[q.id + "_other"] || "").trim() : "";
+      }
+    });
+  });
+  return { row, contact: contact.email ? contact : null };
+}
+
+async function submit(){
+  const btn = document.getElementById("nextBtn");
+  const errEl = document.getElementById("submitErr");
+  const hp = document.getElementById("hpField");
+  const payload = buildRow();
+  state.lastRow = payload;
+  if (hp && hp.value){ finish(); return; }
+  if (!SETTINGS.submitUrl){ finish(); return; }
+  btn.disabled = true; btn.textContent = "Sending…"; errEl.hidden = true;
+  try {
+    await fetch(SETTINGS.submitUrl, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+    finish();
+  } catch(err){
+    btn.disabled = false; btn.textContent = "Submit response";
+    errEl.textContent = "Your response couldn't be sent. Check your internet connection and select Submit again. Your answers are still here.";
+    errEl.hidden = false;
+  }
+}
+function finish(){
+  clearDraft();
+  state.view = "thanks"; state.hasDraft = false;
+  render();
+  window.scrollTo({ top:0 });
+}
+
+/* ---------- boot ---------- */
+function boot(){
+  document.getElementById("versionLabel").textContent = SETTINGS.version;
+  document.getElementById("previewStrip").hidden = !!SETTINGS.submitUrl;
+  const d = loadDraft();
+  if (d){ state.answers = d.answers; state.step = d.step || 0; state.started = d.started || Date.now(); state.hasDraft = true; }
+  if (location.hash === "#all") state.view = "review";
+  render();
+}
+boot();
+})();
+</script>
+</body>
+</html>
