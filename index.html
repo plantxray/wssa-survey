@@ -222,7 +222,7 @@ const SETTINGS = {
   submitUrl: "",
   contactName: "Marco Burger",
   contactEmail: "mburger@salk.edu",
-  version: "Draft 3 · October 2026"
+  version: "Draft 4 · October 2026"
 };
 
 /* ============================================================
@@ -507,6 +507,8 @@ const SURVEY_ALL = [
   },
 
   {
+    // Switched off for now. Change to enabled: true to include this section.
+    enabled: false,
     id: "info",
     title: "Finding information",
     intro: "Where you get invasive plant science and management advice, and what would make it more useful.",
@@ -753,7 +755,7 @@ function labelCard(){
     <div class="lc-head"><span>Survey details</span><span>2026–27</span></div>
     <dl>
       <dt>Conducted by</dt><dd>WSSA Invasive Plant Committee</dd>
-      <dt>For</dt><dd>Researchers, extension educators, students, land managers and anyone else who works on invasive plants. WSSA membership not required.</dd>
+      <dt>For</dt><dd>Scientists, extension specialists and students working on invasive plants. WSSA membership not required.</dd>
       <dt>Time</dt><dd>About 8 minutes</dd>
       <dt>Responses</dt><dd>Anonymous. If you choose to leave an email address, it is kept in a separate list.</dd>
       <dt>Questions</dt><dd>${contact}</dd>
@@ -766,7 +768,7 @@ function renderIntro(){
   app.innerHTML = `
     <p class="eyebrow">WSSA Invasive Plant Committee</p>
     <h1>Invasive Plant Community Survey</h1>
-    <p class="lede">Who studies and manages invasive plants today, how is that work funded, and where do people turn for answers? Your responses will guide the WSSA Invasive Plant Committee's symposia, meeting sessions and priorities.</p>
+    <p class="lede">Who studies invasive plants today, how is that research funded, and how far do its results reach? Your responses will guide the WSSA Invasive Plant Committee's symposia, meeting sessions and priorities.</p>
     ${labelCard()}
     ${draft ? `<div class="notice" role="status"><p>You have an unfinished response on this device.</p><button class="btn btn-primary" type="button" data-act="resume">Continue where I left off</button><button class="btn-link" type="button" data-act="discard">Start over</button></div>` : ""}
     <label class="consent" for="consent">
