@@ -222,7 +222,7 @@ const SETTINGS = {
   submitUrl: "",
   contactName: "Marco Burger",
   contactEmail: "mburger@salk.edu",
-  version: "Draft 4 · October 2026"
+  version: "Draft 4.1 · October 2026"
 };
 
 /* ============================================================
@@ -350,7 +350,8 @@ const SURVEY_ALL = [
     id: "funding",
     title: "Funding & reach",
     intro: "How your invasive plant work is funded, and how far its results reach.",
-    showIf: a => has(a.roles || [], ["research", "extension", "study"]),
+    // Counted as shown until 1.2 is answered, so the section count only changes for people who skip it.
+    showIf: a => !(a.roles && a.roles.length) || has(a.roles, ["research", "extension", "study"]),
     showIfText: "Shown to people who chose Research, Extension or Graduate study in {roles}",
     questions: [
       { id: "fund_sources", type: "multi",
@@ -861,7 +862,7 @@ function renderSection(){
   const last = state.step === vis.length - 1;
   renderRail();
   app.innerHTML = `
-    <p class="eyebrow">Section ${state.step + 1} of ${vis.length}</p>
+    <p class="eyebrow" id="secEyebrow">Section ${state.step + 1} of ${vis.length}</p>
     <h2>${esc(s.title)}</h2>
     <p class="section-intro">${esc(s.intro)}</p>
     <form id="secForm" novalidate>
@@ -954,6 +955,8 @@ function refreshSection(changedId){
     }
   });
   renderRail();
+  const eb = document.getElementById("secEyebrow");
+  if (eb) eb.textContent = `Section ${state.step + 1} of ${vis.length}`;
   const nb = document.getElementById("nextBtn");
   if (nb) nb.textContent = state.step === vis.length - 1 ? "Submit response" : "Next section";
 }
