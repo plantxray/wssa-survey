@@ -746,12 +746,11 @@ function renderIntro(){
   const draft = state.hasDraft;
   app.innerHTML = `
     <h1>Invasive Plant Community Survey</h1>
-    <p class="lede">We're surveying who studies and manages invasive plants, how that research is funded, and where land managers get their information. You don't need to be a WSSA member to take part.</p>
-    <p class="fine">It takes about 8 minutes. Taking part is voluntary, responses are anonymous, and you can skip any question not marked required.</p>
+    <p class="lede">We're surveying who studies and manages invasive plants, how that research is funded, and where land managers get their information.</p>
+    <p class="fine">Taking part is voluntary, responses are anonymous, and you can skip any question not marked required.</p>
     ${draft ? `<div class="notice" role="status"><p>You have an unfinished response on this device.</p><button class="btn btn-primary" type="button" data-act="resume">Continue where I left off</button><button class="btn-link" type="button" data-act="discard">Start over</button></div>` : ""}
     <div class="actions">
       <button class="btn btn-primary" type="button" id="startBtn" data-act="start">Start the survey</button>
-      <button class="btn-link" type="button" data-act="review">See all questions</button>
     </div>`;
 }
 
