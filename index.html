@@ -152,7 +152,7 @@ textarea.field{min-height:6.5rem;resize:vertical}
 .pill:hover span{border-color:var(--accent)}
 .pill input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
 .pill input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
-@media (max-width:720px){.mrow{grid-template-columns:minmax(0,1fr)}.mopts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.25rem}.pill span{text-align:center;padding:.45rem .2rem;font-size:.8rem;border-radius:6px}}
+@media (max-width:720px){.mrow{grid-template-columns:minmax(0,1fr)}.mopts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.25rem}.pill{display:flex}.pill span{display:flex;align-items:center;justify-content:center;width:100%;min-height:2.4rem;text-align:center;white-space:normal;line-height:1.15;padding:.35rem .2rem;font-size:.78rem;border-radius:6px}}
 
 /* Review-all view */
 .review-section{margin-top:3rem;padding-top:1.5rem;border-top:2px solid var(--ink)}
@@ -211,7 +211,7 @@ const SETTINGS = {
   // Paste the Google Apps Script web-app URL here to start saving responses.
   // Leave empty to run in preview mode (nothing is saved).
   submitUrl: "",
-  version: "Draft 8 · October 2026"
+  version: "Draft 9 · October 2026"
 };
 
 /* ============================================================
@@ -372,16 +372,16 @@ const SURVEY_ALL = [
           ["down_lot", "Decreased a lot"],
           ["na", "Too early in my career to say"]
         ] },
-      { id: "impact", type: "matrix",
-        label: "How much has your funded work influenced each of these?",
+      { id: "funding_importance", type: "matrix",
+        label: "How important is access to funding for each part of your work?",
         rows: [
-          ["science", "Scientific understanding"],
-          ["practice", "Management practices on the ground"],
-          ["policy", "Policy, regulations or agency guidance"],
-          ["training", "Training of students and new professionals"],
-          ["public", "Public awareness"]
+          ["research", "Research"],
+          ["training", "Training graduate students and postdocs"],
+          ["outreach", "Extension and outreach"],
+          ["teaching", "Teaching"],
+          ["partners", "Working with land managers and agencies"]
         ],
-        cols: [["none", "None"], ["minor", "Minor"], ["moderate", "Moderate"], ["major", "Major"], ["unsure", "Not sure"]] },
+        cols: [["not", "Not important"], ["slightly", "Slightly"], ["moderately", "Moderately"], ["very", "Very"], ["na", "Not part of my work"]] },
       { id: "scale", type: "single",
         label: "What is the largest scale at which your results are being used?",
         options: [
@@ -401,23 +401,10 @@ const SURVEY_ALL = [
           ["want", "No, but I would like to"],
           ["no", "No"]
         ] },
-      { id: "measure_how", followUp: true, type: "multi",
-        label: "How do you measure it?", help: "Select all that apply.",
+      { id: "measure_detail", followUp: true, type: "textarea",
+        label: "Briefly describe how you measure impact, for example which metrics you use and how you collect them.",
         showIf: a => has(a.measure, ["systematic", "informal"]),
-        showIfText: "Shown if 'Yes' or 'Sometimes' in {measure}",
-        options: [
-          ["pubs", "Publications & citations"],
-          ["altmetrics", "Altmetrics or media coverage"],
-          ["acres", "Acres treated or restored using my recommendations"],
-          ["cover", "Changes in invasive plant cover or spread over time"],
-          ["user_surveys", "Surveys of land managers or other users"],
-          ["extension", "Workshop attendance, extension contacts or downloads"],
-          ["tools", "Use of my tools, apps or datasets"],
-          ["economics", "Cost savings or other economic analysis"],
-          ["policy", "Uptake in policy or management plans"],
-          ["feedback", "Testimonials & informal feedback"],
-          ["other", "Other", null, { other: true }]
-        ] },
+        showIfText: "Shown if 'Yes' or 'Sometimes' in {measure}" },
       { id: "measure_barriers", type: "multi",
         label: "What makes measuring impact difficult?", help: "Select all that apply.",
         options: [
@@ -539,9 +526,17 @@ const SURVEY_ALL = [
 
   {
     id: "ipsm",
-    title: "The IPSM journal",
-    intro: "How you use Invasive Plant Science and Management (IPSM), WSSA's journal for invasive plant research, and what keeps you from publishing there.",
+    title: "WSSA & IPSM",
+    intro: "Your connection to WSSA and its journal, Invasive Plant Science and Management (IPSM).",
     questions: [
+      { id: "wssa_meetings", type: "single",
+        label: "How many WSSA annual meetings have you attended, including 2027?",
+        options: [
+          ["0", "None"],
+          ["1", "1 (this is my first)"],
+          ["2_5", "2–5"],
+          ["6_plus", "More than 5"]
+        ] },
       { id: "ipsm_engage", type: "multi",
         label: "How do you engage with Invasive Plant Science and Management (IPSM)?", help: "Select all that apply.",
         options: [
